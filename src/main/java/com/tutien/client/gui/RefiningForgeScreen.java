@@ -67,18 +67,18 @@ public class RefiningForgeScreen extends AbstractContainerScreen<RefiningForgeMe
 
     @Override
     protected void renderLabels(GuiGraphics graphics, int mouseX, int mouseY) {
-        String tierName = switch (menu.getTier()) {
-            case 1 -> "Hoàng Cấp";
-            case 2 -> "Huyền Cấp";
-            case 3 -> "Địa Cấp";
-            case 4 -> "Thiên Cấp";
-            default -> "Cấp " + menu.getTier();
+        String tierKey = switch (menu.getTier()) {
+            case 1 -> "tutien.tier.yellow";
+            case 2 -> "tutien.tier.mystic";
+            case 3 -> "tutien.tier.earth";
+            case 4 -> "tutien.tier.heaven";
+            default -> "tutien.tier.unknown";
         };
-        graphics.drawString(this.font, "§cLò Luyện Khí - " + tierName, 8, 6, 0xFFFFFF, false);
+        graphics.drawString(this.font, Component.translatable("container.tutien.refining_forge_tier", Component.translatable(tierKey)), 8, 6, 0xFFFFFF, false);
         if (menu.isFixed()) {
-            graphics.drawString(this.font, "§8[Cố Định]", 120, 6, 0xAAAAAA, false);
+            graphics.drawString(this.font, Component.translatable("gui.tutien.fixed_facility"), 120, 6, 0xAAAAAA, false);
         }
-        graphics.drawString(this.font, "§7Túi Đồ", 8, 72, 0x888888, false);
+        graphics.drawString(this.font, Component.translatable("container.inventory"), 8, 72, 0x888888, false);
     }
 
     @Override

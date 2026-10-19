@@ -176,18 +176,18 @@ public class PlayerCultivationData implements INBTSerializable<CompoundTag> {
             this.foundationConsolidation = 0.5; // Cần củng cố căn cơ cho tầng mới
             updateHighest();
             syncAttributes(player);
-            player.sendSystemMessage(Component.literal("§a[Tu Tiên] Chúc mừng đạo hữu đã đột phá lên " + getRealm().getDisplayName() + " - Tầng " + this.layer + "!"));
+            player.sendSystemMessage(Component.translatable("tutien.message.breakthrough_layer_success", getRealm().getDisplayNameComponent(), this.layer));
             return true;
         } else {
             // Đang ở tầng 9, cần đột phá lên cảnh giới kế tiếp!
             if (this.realm >= 8) {
-                player.sendSystemMessage(Component.literal("§6[Tu Tiên] Đạo hữu đã đạt đến cảnh giới Đăng Tiên Viên Mãn, đỉnh phong của thế giới!"));
+                player.sendSystemMessage(Component.translatable("tutien.message.breakthrough_max_realm"));
                 return false;
             }
 
             if (!hasBreakthroughPill) {
                 Realm next = getRealm().getNext();
-                player.sendSystemMessage(Component.literal("§c[Tu Tiên] Đột phá lên " + next.getDisplayName() + " cần có đan dược đột phá tương ứng!"));
+                player.sendSystemMessage(Component.translatable("tutien.message.breakthrough_pill_required", next.getDisplayNameComponent()));
                 return false;
             }
 
@@ -198,7 +198,7 @@ public class PlayerCultivationData implements INBTSerializable<CompoundTag> {
             this.foundationConsolidation = 0.2; // Căn cơ cảnh giới mới rất mỏng, cần củng cố
             updateHighest();
             syncAttributes(player);
-            player.sendSystemMessage(Component.literal("§6§l[Tu Tiên] ĐẠI THÀNH CÔNG! Đạo hữu đã vượt qua thiên kiếp, bước vào cảnh giới " + getRealm().getDisplayName() + "!"));
+            player.sendSystemMessage(Component.translatable("tutien.message.breakthrough_realm_success", getRealm().getDisplayNameComponent()));
             return true;
         }
     }
@@ -245,7 +245,7 @@ public class PlayerCultivationData implements INBTSerializable<CompoundTag> {
                 pillDamageBonus = 0.0f;
                 pillDefenseBonus = 0.0f;
                 syncAttributes(player);
-                player.sendSystemMessage(Component.literal("§e[Tu Tiên] Hiệu lực đan dược đã kết thúc."));
+                player.sendSystemMessage(Component.translatable("tutien.message.pill_buff_ended"));
             }
         }
 
@@ -277,7 +277,7 @@ public class PlayerCultivationData implements INBTSerializable<CompoundTag> {
                 foundationConsolidation = Math.min(1.0, foundationConsolidation + rate);
                 if (foundationConsolidation >= 1.0) {
                     syncAttributes(player);
-                    player.sendSystemMessage(Component.literal("§b[Tu Tiên] Căn cơ của đạo hữu đã được củng cố hoàn chỉnh!"));
+                    player.sendSystemMessage(Component.translatable("tutien.message.foundation_consolidated"));
                 }
             }
         }

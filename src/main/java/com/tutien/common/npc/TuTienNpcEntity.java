@@ -61,7 +61,7 @@ public class TuTienNpcEntity extends PathfinderMob implements MenuProvider {
 
     public void setNpcRole(TuTienNpcRole role) {
         this.entityData.set(ROLE_ID, role.ordinal());
-        this.setCustomName(Component.literal("§6" + role.getTitle()));
+        this.setCustomName(Component.literal("§6").append(role.getTitleComponent()));
     }
 
     @Override
@@ -84,7 +84,7 @@ public class TuTienNpcEntity extends PathfinderMob implements MenuProvider {
 
     @Override
     public Component getDisplayName() {
-        return Component.literal("§6" + getNpcRole().getTitle());
+        return Component.literal("§6").append(getNpcRole().getTitleComponent());
     }
 
     @Nullable

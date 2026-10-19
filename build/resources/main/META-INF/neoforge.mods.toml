@@ -5,8 +5,8 @@ license="MIT"
 [[mods]]
 modId="tutien"
 version="1.0.0"
-displayName="Tu TiÃªn"
-description='''Há» thá»ng RPG Tu TiÃªn hoÃ n chá»nh cho Minecraft 1.21.1 NeoForge'''
+displayName="Road to Immortality"
+description='''Road to Immortality - Complete Xianxia Cultivation RPG System for Minecraft 1.21.1 NeoForge'''
 authors="TuTienTeam"
 
 [[dependencies.tutien]]

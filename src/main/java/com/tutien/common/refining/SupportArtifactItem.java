@@ -24,33 +24,33 @@ import java.util.List;
 
 public class SupportArtifactItem extends Item {
     public enum ArtifactType {
-        HO_TAM_KINH("Hộ Tâm Kính", "Địa Cấp", "§5", 40.0f, 200, "Tạo kết giới hộ thể, miễn nhiễm sát thương trong 5 giây"),
-        CHIEU_YEU_KINH("Chiếu Yêu Kính", "Huyền Cấp", "§9", 25.0f, 160, "Soi rọi toàn bộ sinh vật xung quanh trong bán kính 30 ô"),
-        PHIEN_THIEN_AN("Phiên Thiên Ấn", "Địa Cấp", "§5", 80.0f, 300, "Đập tan mặt đất, gây chấn động diện rộng và làm chậm"),
-        CHU_TIEN_TRAN_DO("Tru Tiên Trận Đồ", "Thiên Cấp", "§6§l", 150.0f, 500, "Triệu hồi Tru Tiên Kiếm Trận giam cầm và tiêu diệt vạn vật");
+        HO_TAM_KINH("ho_tam_kinh", "earth", "§5", 40.0f, 200),
+        CHIEU_YEU_KINH("chieu_yeu_kinh", "mystic", "§9", 25.0f, 160),
+        PHIEN_THIEN_AN("phien_thien_an", "earth", "§5", 80.0f, 300),
+        CHU_TIEN_TRAN_DO("chu_tien_tran_do", "heaven", "§6§l", 150.0f, 500);
 
-        private final String name;
-        private final String tier;
+        private final String id;
+        private final String tierKey;
         private final String color;
         private final float qiCost;
         private final int cooldownTicks;
-        private final String effectDescription;
 
-        ArtifactType(String name, String tier, String color, float qiCost, int cooldownTicks, String effectDescription) {
-            this.name = name;
-            this.tier = tier;
+        ArtifactType(String id, String tierKey, String color, float qiCost, int cooldownTicks) {
+            this.id = id;
+            this.tierKey = tierKey;
             this.color = color;
             this.qiCost = qiCost;
             this.cooldownTicks = cooldownTicks;
-            this.effectDescription = effectDescription;
         }
 
-        public String getName() { return name; }
-        public String getTier() { return tier; }
+        public String getId() { return id; }
+        public String getTierKey() { return "tutien.tier." + tierKey; }
         public String getColor() { return color; }
         public float getQiCost() { return qiCost; }
         public int getCooldownTicks() { return cooldownTicks; }
-        public String getEffectDescription() { return effectDescription; }
+        public Component getEffectDescription() {
+            return Component.translatable("tutien.artifact." + id + ".desc");
+        }
     }
 
     private final ArtifactType artifactType;
@@ -76,7 +76,7 @@ public class SupportArtifactItem extends Item {
             if (data == null) return InteractionResultHolder.pass(stack);
 
             if (data.getLingQi() < artifactType.getQiCost()) {
-                serverPlayer.sendSystemMessage(Component.literal("§c[Tu Tiên] Linh khí không đủ! (Cần " + (int)artifactType.getQiCost() + " Qi)"));
+                serverPlayer.sendSystemMessage(Component.translatable("tutien.message.qi_insufficient", (int)artifactType.getQiCost()));
                 return InteractionResultHolder.fail(stack);
             }
 
@@ -97,7 +97,7 @@ public class SupportArtifactItem extends Item {
                 player.addEffect(new MobEffectInstance(MobEffects.ABSORPTION, 100, 2));
                 level.sendParticles(ParticleTypes.ENCHANTED_HIT, player.getX(), player.getY() + 1.0, player.getZ(), 50, 0.5, 0.5, 0.5, 0.1);
                 level.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.SHIELD_BLOCK, SoundSource.PLAYERS, 1.5f, 1.2f);
-                player.sendSystemMessage(Component.literal("§5[Pháp Khí] Hộ Tâm Kính bảo vệ chân thân!"));
+                player.sendSystemMessage(Component.translatable("tutien.artifact.ho_tam_kinh.activated"));
             }
             case CHIEU_YEU_KINH -> {
                 // Glowing for all mobs in 30 blocks
@@ -107,7 +107,7 @@ public class SupportArtifactItem extends Item {
                 });
                 level.sendParticles(ParticleTypes.END_ROD, player.getX(), player.getY() + 1.5, player.getZ(), 40, 1.0, 1.0, 1.0, 0.05);
                 level.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.BEACON_ACTIVATE, SoundSource.PLAYERS, 1.5f, 1.5f);
-                player.sendSystemMessage(Component.literal("§9[Pháp Khí] Chiếu Yêu Kính phá tan mê chướng!"));
+                player.sendSystemMessage(Component.translatable("tutien.artifact.chieu_yeu_kinh.activated"));
             }
             case PHIEN_THIEN_AN -> {
                 // Shockwave AoE damage + Slowness
@@ -118,7 +118,7 @@ public class SupportArtifactItem extends Item {
                     e.hurt(player.damageSources().magic(), 40.0f);
                     e.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 120, 2));
                 });
-                player.sendSystemMessage(Component.literal("§5[Pháp Khí] Phiên Thiên Ấn trấn áp bát hoang!"));
+                player.sendSystemMessage(Component.translatable("tutien.artifact.phien_thien_an.activated"));
             }
             case CHU_TIEN_TRAN_DO -> {
                 // Giant sword formation
@@ -130,18 +130,18 @@ public class SupportArtifactItem extends Item {
                     e.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 160, 4));
                     e.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 160, 2));
                 });
-                player.sendSystemMessage(Component.literal("§6§l[Pháp Khí] Tru Tiên Trận Đồ xuất thế, tru sát vạn giới!"));
+                player.sendSystemMessage(Component.translatable("tutien.artifact.chu_tien_tran_do.activated"));
             }
         }
     }
 
     @Override
     public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
-        tooltipComponents.add(Component.literal("§7Đẳng cấp: " + artifactType.getColor() + artifactType.getTier()));
-        tooltipComponents.add(Component.literal("§7Tiêu hao: §b" + (int)artifactType.getQiCost() + " Linh khí"));
-        tooltipComponents.add(Component.literal("§7Hồi chiêu: §e" + (artifactType.getCooldownTicks() / 20) + " giây"));
-        tooltipComponents.add(Component.literal("§7Hiệu ứng: §f" + artifactType.getEffectDescription()));
-        tooltipComponents.add(Component.literal("§aNhấn chuột phải để kích hoạt pháp bảo"));
+        tooltipComponents.add(Component.translatable("tutien.tooltip.tier", artifactType.getColor()).append(Component.translatable(artifactType.getTierKey())));
+        tooltipComponents.add(Component.translatable("tutien.tooltip.qi_cost", (int)artifactType.getQiCost()));
+        tooltipComponents.add(Component.translatable("tutien.tooltip.cooldown", (artifactType.getCooldownTicks() / 20)));
+        tooltipComponents.add(Component.translatable("tutien.tooltip.effect").append(artifactType.getEffectDescription()));
+        tooltipComponents.add(Component.translatable("tutien.tooltip.artifact.use_hint"));
         super.appendHoverText(stack, context, tooltipComponents, tooltipFlag);
     }
 }

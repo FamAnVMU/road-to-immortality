@@ -13,7 +13,7 @@ public class CultivationScreen extends Screen {
     private Button breakthroughButton;
 
     public CultivationScreen() {
-        super(Component.literal("Bảng Trạng Thái Tu Tiên"));
+        super(Component.translatable("gui.tutien.cultivation.title"));
     }
 
     @Override
@@ -27,7 +27,7 @@ public class CultivationScreen extends Screen {
 
         // Nút Đột phá
         this.breakthroughButton = addRenderableWidget(Button.builder(
-                Component.literal("Đột Phá"),
+                Component.translatable("gui.tutien.cultivation.breakthrough"),
                 btn -> {
                     PacketDistributor.sendToServer(new C2SPerformBreakthroughPayload());
                     this.onClose();
@@ -38,7 +38,7 @@ public class CultivationScreen extends Screen {
 
         // Nút đóng
         addRenderableWidget(Button.builder(
-                Component.literal("Đóng"),
+                Component.translatable("gui.tutien.close"),
                 btn -> this.onClose()
         ).bounds(centerX - 35, centerY + 90, 70, 18).build());
     }
@@ -60,7 +60,7 @@ public class CultivationScreen extends Screen {
         graphics.fill(left + 2, top + 2, left + panelWidth - 2, top + panelHeight - 2, 0xEE0F0F17);
 
         // Header
-        graphics.drawCenteredString(this.font, "§6§l✦ BẢNG THÔNG TIN TU TIÊN ✦", centerX, top + 8, 0xFFFFFF);
+        graphics.drawCenteredString(this.font, Component.translatable("gui.tutien.cultivation.header"), centerX, top + 8, 0xFFFFFF);
 
         Realm currentRealm = Realm.fromId(ClientCultivationCache.realm);
         double reqTuVi = currentRealm.calculateRequiredTuVi(ClientCultivationCache.layer);
@@ -68,11 +68,11 @@ public class CultivationScreen extends Screen {
 
         // Left Column: Cảnh giới & Tu vi
         int col1X = left + 15;
-        graphics.drawString(this.font, "§eCảnh Giới Hiện Tại:", col1X, top + 25, 0xFFFFFF);
-        graphics.drawString(this.font, "§6§l" + currentRealm.getDisplayName() + " - Tầng " + ClientCultivationCache.layer, col1X, top + 38, 0xFFFFFF);
+        graphics.drawString(this.font, Component.translatable("gui.tutien.cultivation.current_realm"), col1X, top + 25, 0xFFFFFF);
+        graphics.drawString(this.font, Component.literal("§6§l").append(currentRealm.getDisplayNameComponent()).append(" - ").append(Component.translatable("tutien.realm.layer", ClientCultivationCache.layer)), col1X, top + 38, 0xFFFFFF);
 
         // Tu Vi Progress Bar
-        graphics.drawString(this.font, "§aTiến Độ Tu Vi:", col1X, top + 55, 0xFFFFFF);
+        graphics.drawString(this.font, Component.translatable("gui.tutien.cultivation.tuvi_progress"), col1X, top + 55, 0xFFFFFF);
         int barW = 140;
         graphics.fill(col1X, top + 67, col1X + barW, top + 77, 0xFF333333);
         graphics.fill(col1X, top + 67, col1X + (int)(barW * tuViRatio), top + 77, 0xFF4E9F3D);
@@ -80,31 +80,31 @@ public class CultivationScreen extends Screen {
 
         // Củng cố căn cơ
         int foundationPct = (int)(ClientCultivationCache.foundation * 100);
-        graphics.drawString(this.font, "§bCăn Cơ Đã Củng Cố: §f" + foundationPct + "%", col1X, top + 84, 0xFFFFFF);
+        graphics.drawString(this.font, Component.translatable("gui.tutien.cultivation.foundation_consolidation", foundationPct), col1X, top + 84, 0xFFFFFF);
         if (foundationPct < 100) {
-            graphics.drawString(this.font, "§8(Hãy ngồi thiền để củng cố 100% căn cơ)", col1X, top + 95, 0xAAAAAA);
+            graphics.drawString(this.font, Component.translatable("gui.tutien.cultivation.foundation_hint"), col1X, top + 95, 0xAAAAAA);
         }
 
         // Tông Môn & Điểm số
-        graphics.drawString(this.font, "§6Tông Môn: §f" + getSectDisplayName(ClientCultivationCache.sectId), col1X, top + 112, 0xFFFFFF);
-        graphics.drawString(this.font, "§eĐiểm Công Huân: §f" + ClientCultivationCache.congHuan, col1X, top + 125, 0xFFFFFF);
-        graphics.drawString(this.font, "§aCống Hiến Tông Môn: §f" + ClientCultivationCache.congHien, col1X, top + 138, 0xFFFFFF);
+        graphics.drawString(this.font, Component.translatable("gui.tutien.cultivation.sect").append(" ").append(getSectDisplayName(ClientCultivationCache.sectId)), col1X, top + 112, 0xFFFFFF);
+        graphics.drawString(this.font, Component.translatable("gui.tutien.cultivation.merit", ClientCultivationCache.congHuan), col1X, top + 125, 0xFFFFFF);
+        graphics.drawString(this.font, Component.translatable("gui.tutien.cultivation.sect_contrib", ClientCultivationCache.congHien), col1X, top + 138, 0xFFFFFF);
 
         // Right Column: Chỉ số chiến đấu & Kỹ năng
         int col2X = left + 175;
-        graphics.drawString(this.font, "§bThuộc Tính Nhân Vật:", col2X, top + 25, 0xFFFFFF);
-        graphics.drawString(this.font, "§fLinh Khí: §b" + (int)ClientCultivationCache.lingQi + " / " + (int)ClientCultivationCache.maxLingQi, col2X, top + 38, 0xFFFFFF);
-        graphics.drawString(this.font, "§cKhí Huyết Gia Tăng: §f+" + (int)currentRealm.getBaseHealthBonus() + " HP", col2X, top + 51, 0xFFFFFF);
-        graphics.drawString(this.font, "§6Sức Tấn Công: §f+" + (int)currentRealm.getBaseAttackBonus() + " Điểm", col2X, top + 64, 0xFFFFFF);
-        graphics.drawString(this.font, "§eGiáp Hộ Thể: §f+" + (int)currentRealm.getBaseArmorBonus() + " Điểm", col2X, top + 77, 0xFFFFFF);
+        graphics.drawString(this.font, Component.translatable("gui.tutien.cultivation.character_attributes"), col2X, top + 25, 0xFFFFFF);
+        graphics.drawString(this.font, Component.translatable("gui.tutien.cultivation.lingqi", (int)ClientCultivationCache.lingQi, (int)ClientCultivationCache.maxLingQi), col2X, top + 38, 0xFFFFFF);
+        graphics.drawString(this.font, Component.translatable("gui.tutien.cultivation.bonus_hp", (int)currentRealm.getBaseHealthBonus()), col2X, top + 51, 0xFFFFFF);
+        graphics.drawString(this.font, Component.translatable("gui.tutien.cultivation.bonus_attack", (int)currentRealm.getBaseAttackBonus()), col2X, top + 64, 0xFFFFFF);
+        graphics.drawString(this.font, Component.translatable("gui.tutien.cultivation.bonus_armor", (int)currentRealm.getBaseArmorBonus()), col2X, top + 77, 0xFFFFFF);
 
         // Kỹ năng trang bị
-        graphics.drawString(this.font, "§eÔ Kỹ Năng Đang Dùng:", col2X, top + 95, 0xFFFFFF);
+        graphics.drawString(this.font, Component.translatable("gui.tutien.cultivation.equipped_skills"), col2X, top + 95, 0xFFFFFF);
         String[] keys = {"Z", "X", "V", "R"};
         for (int i = 0; i < 4; i++) {
             String sk = ClientCultivationCache.equippedSkills[i];
-            String name = (sk != null && !sk.isEmpty()) ? sk : "Trống";
-            graphics.drawString(this.font, "§7[" + keys[i] + "] §f" + name, col2X, top + 110 + i * 13, 0xFFFFFF);
+            Component skillName = (sk != null && !sk.isEmpty()) ? Component.translatable("tutien.skill." + sk) : Component.translatable("gui.tutien.cultivation.skill_empty");
+            graphics.drawString(this.font, Component.literal("§7[" + keys[i] + "] §f").append(skillName), col2X, top + 110 + i * 13, 0xFFFFFF);
         }
 
         super.render(graphics, mouseX, mouseY, partialTick);
@@ -112,15 +112,15 @@ public class CultivationScreen extends Screen {
         // Tooltip for Breakthrough Button if at Layer 9
         if (ClientCultivationCache.layer == 9 && breakthroughButton.isHovered()) {
             Realm next = currentRealm.getNext();
-            graphics.renderTooltip(this.font, Component.literal("§6Đột phá lên " + next.getDisplayName() + " yêu cầu: §e" + currentRealm.getNextBreakthroughPillId()), mouseX, mouseY);
+            graphics.renderTooltip(this.font, Component.translatable("gui.tutien.cultivation.breakthrough_req_tooltip", next.getDisplayNameComponent(), Component.translatable("item.tutien." + currentRealm.getNextBreakthroughPillId())), mouseX, mouseY);
         }
     }
 
-    private String getSectDisplayName(String sectId) {
+    private Component getSectDisplayName(String sectId) {
         return switch (sectId) {
-            case "thuong_van" -> "Thương Vân Tông";
-            case "con_luan" -> "Côn Luân Thánh Địa";
-            default -> "Tán Tu (Chưa gia nhập)";
+            case "thuong_van" -> Component.translatable("tutien.sect.thuong_van");
+            case "con_luan" -> Component.translatable("tutien.sect.con_luan");
+            default -> Component.translatable("tutien.sect.none");
         };
     }
 

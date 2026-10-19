@@ -42,12 +42,12 @@ public record C2SEquipSkillPayload(int slotIndex, String skillId) implements Cus
                 if (slot < 0 || slot >= 4) return;
 
                 if (!skillId.isEmpty() && !data.hasLearnedSkill(skillId)) {
-                    player.sendSystemMessage(Component.literal("§c[Công Pháp] Bạn chưa học công pháp này!"));
+                    player.sendSystemMessage(Component.translatable("tutien.message.skill_not_learned"));
                     return;
                 }
 
                 data.setEquippedSkill(slot, skillId);
-                player.sendSystemMessage(Component.literal("§a[Công Pháp] Đã trang bị công pháp vào ô kỹ năng số " + (slot + 1) + "!"));
+                player.sendSystemMessage(Component.translatable("tutien.message.skill_equipped", (slot + 1)));
 
                 ModPayloads.syncToPlayer(player);
             }

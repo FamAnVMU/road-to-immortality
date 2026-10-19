@@ -59,32 +59,32 @@ public class PillItem extends Item {
             switch (type) {
                 case TU_VI -> {
                     data.addTuVi(value);
-                    serverPlayer.sendSystemMessage(Component.literal("§a[Tu Tiên] Đan dược hóa thành linh khí tinh thuần, gia tăng §e+" + (long)value + " tu vi§a!"));
+                    serverPlayer.sendSystemMessage(Component.translatable("message.tutien.pill_tuvi", (long) value).withStyle(ChatFormatting.GREEN));
                 }
                 case SPEED -> {
                     data.applyPillBuff(durationTicks, value, 0.0f, 0.0f);
-                    serverPlayer.sendSystemMessage(Component.literal("§b[Tu Tiên] Tốc độ tu luyện tăng gấp " + value + " lần trong " + (durationTicks / 20) + " giây!"));
+                    serverPlayer.sendSystemMessage(Component.translatable("message.tutien.pill_speed", value, durationTicks / 20).withStyle(ChatFormatting.AQUA));
                 }
                 case HEAL_HP -> {
                     player.heal((float) value);
-                    serverPlayer.sendSystemMessage(Component.literal("§a[Tu Tiên] Khí huyết hồi phục +" + (float) value + " máu!"));
+                    serverPlayer.sendSystemMessage(Component.translatable("message.tutien.pill_heal_hp", (float) value).withStyle(ChatFormatting.GREEN));
                 }
                 case HEAL_QI -> {
                     data.restoreLingQi((float) value);
-                    serverPlayer.sendSystemMessage(Component.literal("§b[Tu Tiên] Đan điền linh khí dâng trào, hồi phục +" + (float) value + " linh khí!"));
+                    serverPlayer.sendSystemMessage(Component.translatable("message.tutien.pill_heal_qi", (float) value).withStyle(ChatFormatting.AQUA));
                 }
                 case BUFF_ATTACK -> {
                     data.applyPillBuff(durationTicks, 1.0, (float) value, 0.0f);
                     data.syncAttributes(serverPlayer);
-                    serverPlayer.sendSystemMessage(Component.literal("§c[Tu Tiên] Sức tấn công gia tăng +" + (float) value + " điểm trong " + (durationTicks / 20) + " giây!"));
+                    serverPlayer.sendSystemMessage(Component.translatable("message.tutien.pill_buff_attack", (float) value, durationTicks / 20).withStyle(ChatFormatting.RED));
                 }
                 case BUFF_DEFENSE -> {
                     data.applyPillBuff(durationTicks, 1.0, 0.0f, (float) value);
                     data.syncAttributes(serverPlayer);
-                    serverPlayer.sendSystemMessage(Component.literal("§e[Tu Tiên] Thể phách cứng như kim cang, phòng ngự +" + (float) value + " điểm trong " + (durationTicks / 20) + " giây!"));
+                    serverPlayer.sendSystemMessage(Component.translatable("message.tutien.pill_buff_defense", (float) value, durationTicks / 20).withStyle(ChatFormatting.YELLOW));
                 }
                 case BREAKTHROUGH -> {
-                    serverPlayer.sendSystemMessage(Component.literal("§6[Tu Tiên] Đây là đan dược đột phá cảnh giới. Hãy sử dụng trong Giao diện Đột phá (phím C hoặc K)!"));
+                    serverPlayer.sendSystemMessage(Component.translatable("message.tutien.pill_breakthrough").withStyle(ChatFormatting.GOLD));
                     return InteractionResultHolder.sidedSuccess(stack, level.isClientSide());
                 }
                 default -> {}
@@ -103,15 +103,15 @@ public class PillItem extends Item {
 
     @Override
     public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
-        tooltipComponents.add(Component.literal("§7Đan văn: §e" + "★".repeat(danVan) + " §7(" + danVan + " phẩm đan)"));
+        tooltipComponents.add(Component.translatable("tooltip.tutien.pill_dan_van", "★".repeat(danVan), danVan).withStyle(ChatFormatting.GOLD));
         switch (type) {
-            case TU_VI -> tooltipComponents.add(Component.literal("§aTăng trực tiếp: §e+" + (long)value + " tu vi"));
-            case SPEED -> tooltipComponents.add(Component.literal("§bTốc độ tu luyện: §e" + value + "x §7(" + (durationTicks / 20) + "s)"));
-            case BREAKTHROUGH -> tooltipComponents.add(Component.literal("§6Dùng để đột phá bình cảnh lên cảnh giới kế tiếp"));
-            case HEAL_HP -> tooltipComponents.add(Component.literal("§cHồi phục khí huyết: §e+" + (float)value + " HP"));
-            case HEAL_QI -> tooltipComponents.add(Component.literal("§bHồi phục linh khí: §e+" + (float)value + " Qi"));
-            case BUFF_ATTACK -> tooltipComponents.add(Component.literal("§cTăng sức tấn công: §e+" + (float)value + " §7(" + (durationTicks / 20) + "s)"));
-            case BUFF_DEFENSE -> tooltipComponents.add(Component.literal("§eTăng phòng ngự: §e+" + (float)value + " §7(" + (durationTicks / 20) + "s)"));
+            case TU_VI -> tooltipComponents.add(Component.translatable("tooltip.tutien.pill_tuvi", (long) value).withStyle(ChatFormatting.GREEN));
+            case SPEED -> tooltipComponents.add(Component.translatable("tooltip.tutien.pill_speed", value, durationTicks / 20).withStyle(ChatFormatting.AQUA));
+            case BREAKTHROUGH -> tooltipComponents.add(Component.translatable("tooltip.tutien.pill_breakthrough").withStyle(ChatFormatting.GOLD));
+            case HEAL_HP -> tooltipComponents.add(Component.translatable("tooltip.tutien.pill_heal_hp", (float) value).withStyle(ChatFormatting.RED));
+            case HEAL_QI -> tooltipComponents.add(Component.translatable("tooltip.tutien.pill_heal_qi", (float) value).withStyle(ChatFormatting.AQUA));
+            case BUFF_ATTACK -> tooltipComponents.add(Component.translatable("tooltip.tutien.pill_buff_attack", (float) value, durationTicks / 20).withStyle(ChatFormatting.RED));
+            case BUFF_DEFENSE -> tooltipComponents.add(Component.translatable("tooltip.tutien.pill_buff_defense", (float) value, durationTicks / 20).withStyle(ChatFormatting.YELLOW));
             default -> {}
         }
         super.appendHoverText(stack, context, tooltipComponents, tooltipFlag);

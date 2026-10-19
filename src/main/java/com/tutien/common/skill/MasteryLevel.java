@@ -1,5 +1,7 @@
 package com.tutien.common.skill;
 
+import net.minecraft.network.chat.Component;
+
 public enum MasteryLevel {
     TIEU_THANH(1, "Tiểu Thành", 0, 1.0f, 1.0f),
     DAI_THANH(2, "Đại Thành", 200, 1.25f, 0.9f),
@@ -28,6 +30,14 @@ public enum MasteryLevel {
         return displayName;
     }
 
+    public String getTranslationKey() {
+        return "tutien.mastery." + this.name().toLowerCase();
+    }
+
+    public Component getDisplayNameComponent() {
+        return Component.translatable(getTranslationKey());
+    }
+
     public int getRequiredExp() {
         return requiredExp;
     }
@@ -43,7 +53,6 @@ public enum MasteryLevel {
     public static MasteryLevel fromExp(int exp) {
         if (exp >= DAI_VIEN_MAN.requiredExp) return DAI_VIEN_MAN;
         if (exp >= VIEN_MAN.requiredExp) return VIEN_MAN;
-        if (exp >= DAI_VIEN_MAN.requiredExp) return DAI_THANH;
         if (exp >= DAI_THANH.requiredExp) return DAI_THANH;
         return TIEU_THANH;
     }

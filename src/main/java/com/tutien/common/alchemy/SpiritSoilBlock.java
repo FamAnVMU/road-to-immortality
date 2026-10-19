@@ -69,7 +69,7 @@ public class SpiritSoilBlock extends Block {
                         }
 
                         level.playSound(null, pos, SoundEvents.BONE_MEAL_USE, SoundSource.BLOCKS, 1.0f, 1.0f);
-                        player.displayClientMessage(Component.literal("§a[Linh Điền] Bón linh thạch thành công! Linh dược đã hấp thụ linh khí phát triển!"), true);
+                        player.displayClientMessage(Component.translatable("tutien.message.spirit_soil_fertilized"), true);
                     }
                     return ItemInteractionResult.sidedSuccess(level.isClientSide());
                 }
@@ -80,9 +80,9 @@ public class SpiritSoilBlock extends Block {
 
     @Override
     public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
-        tooltipComponents.add(Component.literal("§7Đẳng cấp đất: §e" + tierName + " §7(Cấp " + tier + ")"));
-        tooltipComponents.add(Component.literal("§2Đất chứa nồng độ linh khí thích hợp để trồng linh dược."));
-        tooltipComponents.add(Component.literal("§eCó thể dùng linh thạch chuột phải để bón thúc sinh trưởng linh dược bên trên!"));
+        tooltipComponents.add(Component.translatable("tutien.tooltip.spirit_soil_tier", tier));
+        tooltipComponents.add(Component.translatable("tutien.tooltip.spirit_soil.desc1"));
+        tooltipComponents.add(Component.translatable("tutien.tooltip.spirit_soil.desc2"));
         super.appendHoverText(stack, context, tooltipComponents, tooltipFlag);
     }
 }

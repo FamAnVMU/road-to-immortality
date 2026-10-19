@@ -74,7 +74,7 @@ public class RecoveryAltarBlockEntity extends BlockEntity {
 
         long cost = getRequiredCost();
         if (!SpiritStoneHelper.hasEnough(serverPlayer, cost)) {
-            serverPlayer.sendSystemMessage(Component.literal("§c[Tế Đàn] Không đủ linh thạch để khởi động tế đàn! Yêu cầu: §e" + cost + " Hạ Phẩm Linh Thạch."));
+            serverPlayer.sendSystemMessage(Component.translatable("tutien.altar.insufficient_stones", cost));
             return;
         }
 
@@ -104,8 +104,8 @@ public class RecoveryAltarBlockEntity extends BlockEntity {
             level.playSound(null, worldPosition, SoundEvents.BEACON_ACTIVATE, SoundSource.BLOCKS, 1.5f, 1.2f);
             level.playSound(null, worldPosition, SoundEvents.TOTEM_USE, SoundSource.PLAYERS, 0.8f, 1.0f);
 
-            serverPlayer.sendSystemMessage(Component.literal("§a§l[Tế Đàn] Tế đàn đã khởi động! Tiêu hao: §e" + cost + " Hạ Phẩm Linh Thạch."));
-            serverPlayer.sendSystemMessage(Component.literal("§bKhí huyết và linh khí đã được hồi phục hoàn toàn, toàn bộ tạp khí đã được tẩy trừ!"));
+            serverPlayer.sendSystemMessage(Component.translatable("tutien.altar.activated", cost));
+            serverPlayer.sendSystemMessage(Component.translatable("tutien.altar.restored"));
         }
     }
 

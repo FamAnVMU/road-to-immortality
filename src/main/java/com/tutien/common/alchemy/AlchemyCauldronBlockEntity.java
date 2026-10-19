@@ -161,19 +161,19 @@ public class AlchemyCauldronBlockEntity extends BlockEntity implements MenuProvi
      */
     public boolean upgradeTier(Player player) {
         if (tier >= 9) {
-            player.sendSystemMessage(Component.literal("§6[Lò Luyện Đan] Lò đã đạt cấp tối đa (Cấp 9 - Thần Cấp)!"));
+            player.sendSystemMessage(Component.translatable("tutien.message.cauldron_max_tier"));
             return false;
         }
         int nextTier = tier + 1;
         this.tier = nextTier;
         setChanged();
-        player.sendSystemMessage(Component.literal("§a[Lò Luyện Đan] Nâng cấp lò luyện đan thành công lên Cấp " + nextTier + "!"));
+        player.sendSystemMessage(Component.translatable("tutien.message.cauldron_upgrade_success", nextTier));
         return true;
     }
 
     @Override
     public Component getDisplayName() {
-        return Component.literal("Lò Luyện Đan - Cấp " + tier);
+        return Component.translatable("container.tutien.alchemy_cauldron_tier", tier);
     }
 
     @Nullable

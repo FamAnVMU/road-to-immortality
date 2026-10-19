@@ -39,14 +39,14 @@ public record C2SToggleMeditationPayload() implements CustomPacketPayload {
                 data.setMeditating(newState);
 
                 if (newState) {
-                    player.sendSystemMessage(Component.literal("§b[Tu Tiên] Đạo hữu bắt đầu nhập định ngồi thiền, hấp thu thiên địa linh khí... (Nhấn C để dừng)"));
+                    player.sendSystemMessage(Component.translatable("tutien.message.meditation_start"));
                     player.level().playSound(null, player.getX(), player.getY(), player.getZ(),
                             SoundEvents.EXPERIENCE_ORB_PICKUP, SoundSource.PLAYERS, 0.5f, 0.8f);
                     if (player.level() instanceof ServerLevel serverLevel) {
                         serverLevel.sendParticles(ParticleTypes.ENCHANT, player.getX(), player.getY() + 0.5, player.getZ(), 20, 0.5, 0.5, 0.5, 0.05);
                     }
                 } else {
-                    player.sendSystemMessage(Component.literal("§e[Tu Tiên] Đạo hữu đã xuất định, kết thúc tu luyện."));
+                    player.sendSystemMessage(Component.translatable("tutien.message.meditation_stop"));
                 }
 
                 // Sync back to client

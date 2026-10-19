@@ -33,7 +33,7 @@ public class NpcTradeScreen extends AbstractContainerScreen<NpcTradeMenu> {
         for (int i = 0; i < maxOffers; i++) {
             final int index = i;
             addRenderableWidget(Button.builder(
-                    Component.literal("Mua"),
+                    Component.translatable("gui.tutien.trade.buy"),
                     btn -> PacketDistributor.sendToServer(new C2SNpcTradePayload(menu.getNpcEntityId(), index))
             ).bounds(left + 185, top + 26 + i * 22, 42, 16).build());
         }
@@ -69,11 +69,11 @@ public class NpcTradeScreen extends AbstractContainerScreen<NpcTradeMenu> {
             graphics.drawString(this.font, name, left + 35, rowY + 3, 0xFFFFFF, false);
 
             String costStr = "";
-            if (offer.getSpiritStoneCost() > 0) costStr += "§e" + offer.getSpiritStoneCost() + " Hạ Phẩm ";
-            if (offer.getCongHuanCost() > 0) costStr += "§a" + offer.getCongHuanCost() + " Công Huân ";
-            if (offer.getCongHienCost() > 0) costStr += "§b" + offer.getCongHienCost() + " Cống Hiến ";
+            if (offer.getSpiritStoneCost() > 0) costStr += Component.translatable("gui.tutien.trade.cost_spirit_stone", offer.getSpiritStoneCost()).getString() + " ";
+            if (offer.getCongHuanCost() > 0) costStr += Component.translatable("gui.tutien.trade.cost_merit", offer.getCongHuanCost()).getString() + " ";
+            if (offer.getCongHienCost() > 0) costStr += Component.translatable("gui.tutien.trade.cost_sect_contrib", offer.getCongHienCost()).getString() + " ";
             if (offer.getMinRealm() > 0) {
-                costStr += "§7(" + Realm.fromId(offer.getMinRealm()).getDisplayName() + ")";
+                costStr += "(" + Realm.fromId(offer.getMinRealm()).getDisplayNameComponent().getString() + ")";
             }
 
             graphics.drawString(this.font, costStr, left + 35, rowY + 11, 0xAAAAAA, false);
@@ -97,8 +97,8 @@ public class NpcTradeScreen extends AbstractContainerScreen<NpcTradeMenu> {
 
     @Override
     protected void renderLabels(GuiGraphics graphics, int mouseX, int mouseY) {
-        graphics.drawString(this.font, "§6✦ " + menu.getRole().getTitle() + " ✦", 10, 8, 0xFFFFFF, false);
-        graphics.drawString(this.font, "§7Túi Đồ", 38, 108, 0x888888, false);
+        graphics.drawString(this.font, Component.literal("§6✦ ").append(menu.getRole().getTitleComponent()).append(" ✦"), 10, 8, 0xFFFFFF, false);
+        graphics.drawString(this.font, Component.translatable("container.inventory"), 38, 108, 0x888888, false);
     }
 
     @Override

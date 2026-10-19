@@ -63,7 +63,7 @@ public class TuTienCommands {
                                             PlayerCultivationData data = player.getData(ModDataAttachments.CULTIVATION_DATA);
                                             if (data != null) {
                                                 data.addTuVi(amount);
-                                                player.sendSystemMessage(Component.literal("§a[Tu Tiên] Đã thêm +" + (long)amount + " tu vi!"));
+                                                player.sendSystemMessage(Component.translatable("tutien.command.tuvi_added", (long)amount));
                                                 ModPayloads.syncToPlayer(player);
                                             }
                                             return 1;
@@ -82,7 +82,7 @@ public class TuTienCommands {
                                                 data.setRealmId(r);
                                                 data.setLayer(1);
                                                 data.syncAttributes(player);
-                                                player.sendSystemMessage(Component.literal("§a[Tu Tiên] Đã đặt cảnh giới: " + data.getRealm().getDisplayName()));
+                                                player.sendSystemMessage(Component.translatable("tutien.command.realm_set", data.getRealm().getDisplayNameComponent()));
                                                 ModPayloads.syncToPlayer(player);
                                             }
                                             return 1;
@@ -97,7 +97,7 @@ public class TuTienCommands {
                                                         data.setRealmId(r);
                                                         data.setLayer(l);
                                                         data.syncAttributes(player);
-                                                        player.sendSystemMessage(Component.literal("§a[Tu Tiên] Đã đặt cảnh giới: " + data.getRealm().getDisplayName() + " - Tầng " + l));
+                                                        player.sendSystemMessage(Component.translatable("tutien.command.realm_set_layer", data.getRealm().getDisplayNameComponent(), l));
                                                         ModPayloads.syncToPlayer(player);
                                                     }
                                                     return 1;
@@ -113,7 +113,7 @@ public class TuTienCommands {
                                     PlayerCultivationData data = player.getData(ModDataAttachments.CULTIVATION_DATA);
                                     if (data != null) {
                                         data.setLingQi(data.getMaxLingQi());
-                                        player.sendSystemMessage(Component.literal("§b[Tu Tiên] Đã hồi phục đầy đan điền linh khí!"));
+                                        player.sendSystemMessage(Component.translatable("tutien.command.qi_restored"));
                                         ModPayloads.syncToPlayer(player);
                                     }
                                     return 1;

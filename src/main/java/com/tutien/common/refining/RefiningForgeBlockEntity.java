@@ -156,26 +156,26 @@ public class RefiningForgeBlockEntity extends BlockEntity implements MenuProvide
 
     public boolean upgradeTier(Player player) {
         if (tier >= 4) {
-            player.sendSystemMessage(Component.literal("§6[Lò Luyện Khí] Lò đã đạt cấp tối đa (Cấp 4 - Thiên Cấp)!"));
+            player.sendSystemMessage(Component.translatable("tutien.message.forge_max_tier"));
             return false;
         }
         int nextTier = tier + 1;
         this.tier = nextTier;
         setChanged();
-        player.sendSystemMessage(Component.literal("§a[Lò Luyện Khí] Nâng cấp lò luyện khí thành công lên Cấp " + nextTier + "!"));
+        player.sendSystemMessage(Component.translatable("tutien.message.forge_upgrade_success", nextTier));
         return true;
     }
 
     @Override
     public Component getDisplayName() {
-        String tierStr = switch (tier) {
-            case 1 -> "Hoàng Cấp";
-            case 2 -> "Huyền Cấp";
-            case 3 -> "Địa Cấp";
-            case 4 -> "Thiên Cấp";
-            default -> "Cấp " + tier;
+        String tierKey = switch (tier) {
+            case 1 -> "tutien.tier.yellow";
+            case 2 -> "tutien.tier.mystic";
+            case 3 -> "tutien.tier.earth";
+            case 4 -> "tutien.tier.heaven";
+            default -> "tutien.tier.unknown";
         };
-        return Component.literal("Lò Luyện Khí - " + tierStr);
+        return Component.translatable("container.tutien.refining_forge_tier", Component.translatable(tierKey));
     }
 
     @Nullable

@@ -2,7 +2,9 @@ package com.tutien.common.alchemy;
 
 import com.tutien.common.cultivation.PlayerCultivationData;
 import com.tutien.common.registry.ModDataAttachments;
+import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -18,36 +20,36 @@ import java.util.List;
 
 public class RecipeScrollItem extends Item {
     public enum ScrollType {
-        DAN_PHUONG("Đan Phương", "Tăng kinh nghiệm luyện đan và mở khóa công thức"),
-        BAN_VE("Bản Vẽ Luyện Khí", "Tăng kinh nghiệm luyện khí và mở khóa chế tạo pháp bảo");
+        DAN_PHUONG("scroll.tutien.dan_phuong", "scroll.tutien.dan_phuong.desc"),
+        BAN_VE("scroll.tutien.ban_ve", "scroll.tutien.ban_ve.desc");
 
-        private final String title;
-        private final String desc;
+        private final String titleKey;
+        private final String descKey;
 
-        ScrollType(String title, String desc) {
-            this.title = title;
-            this.desc = desc;
+        ScrollType(String titleKey, String descKey) {
+            this.titleKey = titleKey;
+            this.descKey = descKey;
         }
 
-        public String getTitle() { return title; }
-        public String getDesc() { return desc; }
+        public MutableComponent getTitleComponent() { return Component.translatable(titleKey); }
+        public MutableComponent getDescComponent() { return Component.translatable(descKey); }
     }
 
     private final ScrollType scrollType;
-    private final String recipeName;
+    private final String recipeNameKey;
     private final int expReward;
     private final int requiredLevel;
 
-    public RecipeScrollItem(ScrollType scrollType, String recipeName, int expReward, int requiredLevel) {
+    public RecipeScrollItem(ScrollType scrollType, String recipeNameKey, int expReward, int requiredLevel) {
         super(new Item.Properties().stacksTo(16));
         this.scrollType = scrollType;
-        this.recipeName = recipeName;
+        this.recipeNameKey = recipeNameKey;
         this.expReward = expReward;
         this.requiredLevel = requiredLevel;
     }
 
     public ScrollType getScrollType() { return scrollType; }
-    public String getRecipeName() { return recipeName; }
+    public String getRecipeNameKey() { return recipeNameKey; }
     public int getExpReward() { return expReward; }
     public int getRequiredLevel() { return requiredLevel; }
 
@@ -60,10 +62,12 @@ public class RecipeScrollItem extends Item {
 
             if (scrollType == ScrollType.DAN_PHUONG) {
                 data.addAlchemyExp(expReward);
-                serverPlayer.sendSystemMessage(Component.literal("§a[Tu Tiên] Bạn đã nghiên cứu " + recipeName + ", nhận +" + expReward + " EXP Luyện Đan (Cấp " + data.getAlchemyLevel() + ")!"));
+                serverPlayer.sendSystemMessage(Component.translatable("message.tutien.recipe_alchemy_researched",
+                        Component.translatable(recipeNameKey), expReward, data.getAlchemyLevel()).withStyle(ChatFormatting.GREEN));
             } else {
                 data.addRefiningExp(expReward);
-                serverPlayer.sendSystemMessage(Component.literal("§b[Tu Tiên] Bạn đã nghiên cứu " + recipeName + ", nhận +" + expReward + " EXP Luyện Khí (Cấp " + data.getRefiningLevel() + ")!"));
+                serverPlayer.sendSystemMessage(Component.translatable("message.tutien.recipe_refining_researched",
+                        Component.translatable(recipeNameKey), expReward, data.getRefiningLevel()).withStyle(ChatFormatting.AQUA));
             }
 
             level.playSound(null, player.getX(), player.getY(), player.getZ(),
@@ -79,10 +83,11 @@ public class RecipeScrollItem extends Item {
 
     @Override
     public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
-        tooltipComponents.add(Component.literal("§6" + scrollType.getTitle() + ": §f" + recipeName));
-        tooltipComponents.add(Component.literal("§7Yêu cầu cấp độ: §eCấp " + requiredLevel));
-        tooltipComponents.add(Component.literal("§aNhận: §e+" + expReward + " EXP " + (scrollType == ScrollType.DAN_PHUONG ? "Luyện Đan" : "Luyện Khí")));
-        tooltipComponents.add(Component.literal("§8" + scrollType.getDesc()));
+        tooltipComponents.add(Component.translatable("tooltip.tutien.recipe_title", scrollType.getTitleComponent(), Component.translatable(recipeNameKey)).withStyle(ChatFormatting.GOLD));
+        tooltipComponents.add(Component.translatable("tooltip.tutien.recipe_req_level", requiredLevel).withStyle(ChatFormatting.GRAY));
+        Component typeStr = scrollType == ScrollType.DAN_PHUONG ? Component.translatable("tooltip.tutien.recipe_alchemy") : Component.translatable("tooltip.tutien.recipe_refining");
+        tooltipComponents.add(Component.translatable("tooltip.tutien.recipe_reward", expReward, typeStr).withStyle(ChatFormatting.GREEN));
+        tooltipComponents.add(scrollType.getDescComponent().withStyle(ChatFormatting.DARK_GRAY));
         super.appendHoverText(stack, context, tooltipComponents, tooltipFlag);
     }
 }

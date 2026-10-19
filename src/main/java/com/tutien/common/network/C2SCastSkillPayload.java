@@ -53,12 +53,12 @@ public record C2SCastSkillPayload(int slotIndex) implements CustomPacketPayload 
 
                 String skillId = data.getEquippedSkills()[slot];
                 if (skillId == null || skillId.isEmpty()) {
-                    player.sendSystemMessage(Component.literal("§c[Công Pháp] Ô kỹ năng số " + (slot + 1) + " chưa được trang bị!"));
+                    player.sendSystemMessage(Component.translatable("tutien.message.skill_slot_unequipped", (slot + 1)));
                     return;
                 }
 
                 if (data.getCooldown(skillId) > 0) {
-                    player.sendSystemMessage(Component.literal("§c[Công Pháp] Kỹ năng đang trong thời gian hồi chiêu!"));
+                    player.sendSystemMessage(Component.translatable("tutien.message.skill_on_cooldown"));
                     return;
                 }
 
@@ -69,7 +69,7 @@ public record C2SCastSkillPayload(int slotIndex) implements CustomPacketPayload 
                 float qiCost = baseQiCost * mastery.getQiCostMultiplier();
 
                 if (data.getLingQi() < qiCost) {
-                    player.sendSystemMessage(Component.literal("§c[Công Pháp] Linh khí không đủ! (Cần " + (int)qiCost + " Qi)"));
+                    player.sendSystemMessage(Component.translatable("tutien.message.qi_insufficient", (int)qiCost));
                     return;
                 }
 
@@ -137,7 +137,7 @@ public record C2SCastSkillPayload(int slotIndex) implements CustomPacketPayload 
                     e.hurt(player.damageSources().playerAttack(player), 20.0f * dmgMult);
                     e.knockback(0.8, -look.x, -look.z);
                 });
-                player.sendSystemMessage(Component.literal("§e[Võ Kỹ] Thanh Phong Kiếm Quyết!"));
+                player.sendSystemMessage(Component.translatable("tutien.skill.cast.thanh_phong_kiem"));
             }
             case "lang_ba_vi_bo" -> {
                 // Lăng Ba Vi Bộ: Lướt nhanh về phía trước + Tốc độ
@@ -147,7 +147,7 @@ public record C2SCastSkillPayload(int slotIndex) implements CustomPacketPayload 
                 player.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 100, 2));
                 level.sendParticles(ParticleTypes.CLOUD, player.getX(), player.getY(), player.getZ(), 20, 0.3, 0.1, 0.3, 0.1);
                 level.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.ENDERMAN_TELEPORT, SoundSource.PLAYERS, 1.0f, 1.5f);
-                player.sendSystemMessage(Component.literal("§9[Thân Pháp] Lăng Ba Vi Bộ!"));
+                player.sendSystemMessage(Component.translatable("tutien.skill.cast.lang_ba_vi_bo"));
             }
             case "liet_hoa_chuong" -> {
                 // Liệt Hỏa Chưởng: Chưởng lực hỏa diễm
@@ -161,7 +161,7 @@ public record C2SCastSkillPayload(int slotIndex) implements CustomPacketPayload 
                     e.hurt(player.damageSources().playerAttack(player), 28.0f * dmgMult);
                     e.setRemainingFireTicks(100);
                 });
-                player.sendSystemMessage(Component.literal("§e[Võ Kỹ] Liệt Hỏa Chưởng!"));
+                player.sendSystemMessage(Component.translatable("tutien.skill.cast.liet_hoa_chuong"));
             }
             case "hu_khong_bo" -> {
                 // Hư Không Bộ: Dịch chuyển tức thời 8 ô
@@ -170,7 +170,7 @@ public record C2SCastSkillPayload(int slotIndex) implements CustomPacketPayload 
                 player.teleportTo(target.x, target.y, target.z);
                 level.sendParticles(ParticleTypes.PORTAL, target.x, target.y + 1.0, target.z, 40, 0.5, 0.5, 0.5, 0.1);
                 level.playSound(null, target.x, target.y, target.z, SoundEvents.CHORUS_FRUIT_TELEPORT, SoundSource.PLAYERS, 1.2f, 1.2f);
-                player.sendSystemMessage(Component.literal("§5[Thân Pháp] Hư Không Bộ!"));
+                player.sendSystemMessage(Component.translatable("tutien.skill.cast.hu_khong_bo"));
             }
             case "thien_loi_quyet" -> {
                 // Thiên Lôi Quyết: Gọi sét đánh mục tiêu trong tầm nhìn
@@ -194,7 +194,7 @@ public record C2SCastSkillPayload(int slotIndex) implements CustomPacketPayload 
                 if (target != null) {
                     target.hurt(player.damageSources().playerAttack(player), 55.0f * dmgMult);
                 }
-                player.sendSystemMessage(Component.literal("§5§l[Tuyệt Kỹ] Thiên Lôi Quyết!"));
+                player.sendSystemMessage(Component.translatable("tutien.skill.cast.thien_loi_quyet"));
             }
             case "huyen_bang_kiem" -> {
                 // Huyền Băng Kiếm Trận: Đóng băng kẻ địch trong 10 khối
@@ -206,7 +206,7 @@ public record C2SCastSkillPayload(int slotIndex) implements CustomPacketPayload 
                     e.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 120, 3));
                     e.setTicksFrozen(200);
                 });
-                player.sendSystemMessage(Component.literal("§9§l[Tuyệt Kỹ] Huyền Băng Kiếm Trận!"));
+                player.sendSystemMessage(Component.translatable("tutien.skill.cast.huyen_bang_kiem"));
             }
             case "van_kiem_quy_tong" -> {
                 // Vạn Kiếm Quy Tông: Kiếm trận hủy diệt 15 khối
@@ -217,7 +217,7 @@ public record C2SCastSkillPayload(int slotIndex) implements CustomPacketPayload 
                     e.hurt(player.damageSources().playerAttack(player), 120.0f * dmgMult);
                     level.sendParticles(ParticleTypes.EXPLOSION, e.getX(), e.getY() + 0.5, e.getZ(), 1, 0, 0, 0, 0);
                 });
-                player.sendSystemMessage(Component.literal("§6§l[Bí Pháp] VẠN KIẾM QUY TÔNG!"));
+                player.sendSystemMessage(Component.translatable("tutien.skill.cast.van_kiem_quy_tong"));
             }
             case "thai_hu_than_loi" -> {
                 // Thái Hư Thần Lôi: Đại thiên kiếp nộ nổ tung
@@ -228,7 +228,7 @@ public record C2SCastSkillPayload(int slotIndex) implements CustomPacketPayload 
                     e.hurt(player.damageSources().magic(), 180.0f * dmgMult);
                     e.knockback(2.0, player.getX() - e.getX(), player.getZ() - e.getZ());
                 });
-                player.sendSystemMessage(Component.literal("§6§l[Bí Pháp] THÁI HƯ THẦN LÔI!"));
+                player.sendSystemMessage(Component.translatable("tutien.skill.cast.thai_hu_than_loi"));
             }
         }
     }

@@ -5,6 +5,7 @@ import com.tutien.common.cultivation.Realm;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -43,7 +44,7 @@ public class CultivationHudOverlay {
         // LingQi Fill (Deep Cyan / Blue)
         graphics.fill(qiX, qiY, qiX + fillWidth, qiY + qiHeight, 0xFF00ADB5);
 
-        String qiText = "Linh Khí: " + (int) ClientCultivationCache.lingQi + " / " + (int) ClientCultivationCache.maxLingQi;
+        String qiText = Component.translatable("hud.tutien.lingqi", (int) ClientCultivationCache.lingQi, (int) ClientCultivationCache.maxLingQi).getString();
         graphics.drawString(mc.font, qiText, qiX + 4, qiY + 2, 0xFFFFFF, true);
 
         // 2. Cultivation & Meditation HUD (Center Top when meditating or active)
@@ -58,7 +59,7 @@ public class CultivationHudOverlay {
             graphics.fill(boxX, medY, boxX + boxWidth, medY + boxHeight, 0xDD12121E);
 
             Realm currentRealm = Realm.fromId(ClientCultivationCache.realm);
-            String title = "§6§l[" + currentRealm.getDisplayName() + " - Tầng " + ClientCultivationCache.layer + "]";
+            String title = Component.literal("§6§l[").append(currentRealm.getDisplayNameComponent()).append(" - ").append(Component.translatable("tutien.realm.layer", ClientCultivationCache.layer)).append("]").getString();
             graphics.drawCenteredString(mc.font, title, centerX, medY + 4, 0xFFFFFF);
 
             // Tu Vi Bar
@@ -71,12 +72,12 @@ public class CultivationHudOverlay {
             graphics.fill(barX, barY, barX + barWidth, barY + 8, 0xFF333333);
             graphics.fill(barX, barY, barX + (int) (barWidth * tuViRatio), barY + 8, 0xFF4E9F3D);
 
-            String tuViText = "Tu Vi: " + (long) ClientCultivationCache.tuVi + " / " + (long) reqTuVi + " (" + (int)(tuViRatio * 100) + "%)";
+            String tuViText = Component.translatable("hud.tutien.tuvi_progress", (long) ClientCultivationCache.tuVi, (long) reqTuVi, (int)(tuViRatio * 100)).getString();
             graphics.drawCenteredString(mc.font, tuViText, centerX, barY, 0xFFFFFF);
 
             // Foundation & Meditation Tip
             int foundationPct = (int) (ClientCultivationCache.foundation * 100);
-            String infoText = "§bCăn cơ: " + foundationPct + "% §7| §e[Nhấn C để dừng ngồi thiền]";
+            String infoText = Component.translatable("hud.tutien.foundation_info", foundationPct).getString();
             graphics.drawCenteredString(mc.font, infoText, centerX, medY + 32, 0xFFFFFF);
         }
 
@@ -91,7 +92,7 @@ public class CultivationHudOverlay {
             graphics.fill(slotBoxX + 1, skillY + 1, slotBoxX + 29, skillY + 19, 0xDD222831);
 
             String skill = ClientCultivationCache.equippedSkills[i];
-            String display = skill != null && !skill.isEmpty() ? skill.substring(0, Math.min(3, skill.length())) : "Trống";
+            String display = skill != null && !skill.isEmpty() ? skill.substring(0, Math.min(3, skill.length())) : Component.translatable("gui.tutien.cultivation.skill_empty").getString();
             graphics.drawString(mc.font, "[" + keys[i] + "]", slotBoxX + 2, skillY + 2, 0xFFFF00, false);
             graphics.drawString(mc.font, display, slotBoxX + 2, skillY + 10, 0x00FFCC, false);
         }

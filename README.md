@@ -1,6 +1,11 @@
-# Mod Tu Tiên - Minecraft 1.21.1 NeoForge
+# Road to Immortality (Đường Tu Tiên) - Minecraft 1.21.1 NeoForge
 
-Hệ thống RPG Tu Tiên / Tiên Hiệp hoàn chỉnh, server-authoritative, cân bằng và có chiều sâu dành cho Minecraft phiên bản **1.21.1**, mod loader **NeoForge**, ngôn ngữ **Java 21**.
+Hệ thống RPG Tu Tiên / Tiên Hiệp (Xianxia Cultivation) hoàn chỉnh, server-authoritative, cân bằng và có chiều sâu dành cho Minecraft phiên bản **1.21.1**, mod loader **NeoForge**, ngôn ngữ **Java 21**.
+
+### Hỗ Trợ Đa Ngôn Ngữ (i18n):
+Mod hỗ trợ song ngữ 100% không dùng chuỗi cứng (hardcoded text), tự động chuyển đổi theo ngôn ngữ người chơi chọn trong cài đặt Minecraft:
+- **Tiếng Việt (`vi_vn.json`)**: Văn phong tu chân, tiên hiệp phương Đông thuần thục (Luyện Khí, Trúc Cơ, Kim Đan, Linh Thạch, Tụ Linh Trận, v.v.).
+- **English (`en_us.json`)**: Authentic Eastern Cultivation / Xianxia terminology (Qi Condensation, Foundation Establishment, Golden Core, Nascent Soul, Dantian, Spirit Stones, Qi Gathering Formation, etc.).
 
 ---
 

@@ -63,8 +63,7 @@ public class CultivationArrayBlock extends BaseEntityBlock {
         if (!level.isClientSide()) {
             BlockEntity be = level.getBlockEntity(pos);
             if (be instanceof CultivationArrayBlockEntity array) {
-                player.sendSystemMessage(Component.literal("§b[Tụ Linh Trận] " + array.getTierName() +
-                        " | Bán kính: " + array.getRadius() + " ô | Tăng tốc tu luyện: §e" + array.getMultiplier() + "x"));
+                player.sendSystemMessage(Component.translatable("tutien.message.array_info", array.getTier(), array.getRadius(), array.getMultiplier()));
             }
         }
         return ItemInteractionResult.sidedSuccess(level.isClientSide());
@@ -75,8 +74,7 @@ public class CultivationArrayBlock extends BaseEntityBlock {
         if (!level.isClientSide()) {
             BlockEntity be = level.getBlockEntity(pos);
             if (be instanceof CultivationArrayBlockEntity array) {
-                player.sendSystemMessage(Component.literal("§b[Tụ Linh Trận] " + array.getTierName() +
-                        " | Bán kính: " + array.getRadius() + " ô | Tăng tốc tu luyện: §e" + array.getMultiplier() + "x"));
+                player.sendSystemMessage(Component.translatable("tutien.message.array_info", array.getTier(), array.getRadius(), array.getMultiplier()));
             }
         }
         return InteractionResult.sidedSuccess(level.isClientSide());
@@ -84,8 +82,8 @@ public class CultivationArrayBlock extends BaseEntityBlock {
 
     @Override
     public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
-        tooltipComponents.add(Component.literal("§bTrận pháp ngưng tụ thiên địa linh khí."));
-        tooltipComponents.add(Component.literal("§eNgười tu tiên ngồi thiền trong phạm vi trận pháp sẽ được tăng tốc tu vi vượt trội."));
+        tooltipComponents.add(Component.translatable("tutien.tooltip.cultivation_array.desc1"));
+        tooltipComponents.add(Component.translatable("tutien.tooltip.cultivation_array.desc2"));
         super.appendHoverText(stack, context, tooltipComponents, tooltipFlag);
     }
 }

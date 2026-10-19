@@ -39,7 +39,7 @@ public class CommonEvents {
             if (data.isMeditating()) {
                 if (player.getDeltaMovement().horizontalDistance() > 0.08) {
                     data.setMeditating(false);
-                    player.sendSystemMessage(Component.literal("§c[Tu Tiên] Bạn đã di chuyển, trạng thái ngồi thiền bị gián đoạn!"));
+                    player.sendSystemMessage(Component.translatable("tutien.message.meditation_interrupted_movement"));
                     ModPayloads.syncToPlayer(player);
                 } else if (player.tickCount % 5 == 0 && player.level() instanceof ServerLevel serverLevel) {
                     serverLevel.sendParticles(ParticleTypes.ENCHANT, player.getX(), player.getY() + 0.3, player.getZ(), 3, 0.3, 0.2, 0.3, 0.05);
@@ -62,7 +62,7 @@ public class CommonEvents {
             PlayerCultivationData data = player.getData(ModDataAttachments.CULTIVATION_DATA);
             if (data != null && data.isMeditating()) {
                 data.setMeditating(false);
-                player.sendSystemMessage(Component.literal("§c[Tu Tiên] Bị tấn công! Quá trình ngồi thiền tu luyện đã bị hủy bỏ!"));
+                player.sendSystemMessage(Component.translatable("tutien.message.meditation_interrupted_damage"));
                 ModPayloads.syncToPlayer(player);
             }
         }

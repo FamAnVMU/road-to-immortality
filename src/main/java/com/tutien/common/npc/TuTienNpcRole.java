@@ -1,6 +1,7 @@
 package com.tutien.common.npc;
 
 import com.tutien.common.registry.ModItems;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 
@@ -27,6 +28,18 @@ public enum TuTienNpcRole {
 
     public String getTitle() { return title; }
     public String getDescription() { return description; }
+
+    public String getTranslationKey() {
+        return "tutien.npc_role." + this.name().toLowerCase();
+    }
+
+    public Component getTitleComponent() {
+        return Component.translatable(getTranslationKey());
+    }
+
+    public Component getDescriptionComponent() {
+        return Component.translatable(getTranslationKey() + ".desc");
+    }
 
     public List<NpcTradeOffer> getOffers() {
         List<NpcTradeOffer> offers = new ArrayList<>();

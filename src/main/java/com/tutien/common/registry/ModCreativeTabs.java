@@ -15,7 +15,7 @@ public class ModCreativeTabs {
 
     public static final Supplier<CreativeModeTab> TU_TIEN_TAB = CREATIVE_TABS.register("tutien_tab", () ->
             CreativeModeTab.builder()
-                    .title(Component.literal("Tu Tiên - Tiên Hiệp RPG"))
+                    .title(Component.translatable("itemGroup.tutien"))
                     .icon(() -> new ItemStack(ModItems.THAN_PHAM_LINH_THACH.get()))
                     .displayItems((parameters, output) -> {
                         // Linh thạch

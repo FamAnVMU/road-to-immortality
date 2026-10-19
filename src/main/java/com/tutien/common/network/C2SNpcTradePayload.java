@@ -44,7 +44,7 @@ public record C2SNpcTradePayload(int npcEntityId, int offerIndex) implements Cus
             if (context.player() instanceof ServerPlayer player) {
                 Entity entity = player.level().getEntity(payload.npcEntityId());
                 if (!(entity instanceof TuTienNpcEntity npc) || npc.distanceToSqr(player) > 64.0) {
-                    player.sendSystemMessage(Component.literal("§c[Giao Dịch] Bạn ở quá xa NPC!"));
+                    player.sendSystemMessage(Component.translatable("tutien.trade.too_far"));
                     return;
                 }
 
@@ -59,23 +59,23 @@ public record C2SNpcTradePayload(int npcEntityId, int offerIndex) implements Cus
 
                 // 1. Check Realm Requirement
                 if (data.getRealmId() < offer.getMinRealm()) {
-                    player.sendSystemMessage(Component.literal("§c[Giao Dịch] Cảnh giới của bạn chưa đủ để mua vật phẩm này!"));
+                    player.sendSystemMessage(Component.translatable("tutien.trade.insufficient_realm"));
                     return;
                 }
 
                 // 2. Check Currency Requirements
                 if (offer.getSpiritStoneCost() > 0 && !SpiritStoneHelper.hasEnough(player, offer.getSpiritStoneCost())) {
-                    player.sendSystemMessage(Component.literal("§c[Giao Dịch] Không đủ linh thạch! Cần §e" + offer.getSpiritStoneCost() + " Hạ Phẩm Linh Thạch."));
+                    player.sendSystemMessage(Component.translatable("tutien.trade.insufficient_spirit_stones", offer.getSpiritStoneCost()));
                     return;
                 }
 
                 if (offer.getCongHuanCost() > 0 && data.getCongHuan() < offer.getCongHuanCost()) {
-                    player.sendSystemMessage(Component.literal("§c[Giao Dịch] Không đủ điểm Công Huân! Cần §e" + offer.getCongHuanCost() + " điểm."));
+                    player.sendSystemMessage(Component.translatable("tutien.trade.insufficient_merit", offer.getCongHuanCost()));
                     return;
                 }
 
                 if (offer.getCongHienCost() > 0 && data.getCongHien() < offer.getCongHienCost()) {
-                    player.sendSystemMessage(Component.literal("§c[Giao Dịch] Không đủ điểm Cống Hiến Tông Môn! Cần §e" + offer.getCongHienCost() + " điểm."));
+                    player.sendSystemMessage(Component.translatable("tutien.trade.insufficient_sect_contrib", offer.getCongHienCost()));
                     return;
                 }
 
@@ -98,7 +98,7 @@ public record C2SNpcTradePayload(int npcEntityId, int offerIndex) implements Cus
 
                 player.level().playSound(null, player.getX(), player.getY(), player.getZ(),
                         SoundEvents.VILLAGER_YES, SoundSource.NEUTRAL, 1.0f, 1.0f);
-                player.sendSystemMessage(Component.literal("§a[Giao Dịch] Giao dịch thành công với " + npc.getNpcRole().getTitle() + "!"));
+                player.sendSystemMessage(Component.translatable("tutien.trade.success", npc.getNpcRole().getTitleComponent()));
 
                 ModPayloads.syncToPlayer(player);
             }

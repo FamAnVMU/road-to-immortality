@@ -7,6 +7,7 @@ import com.tutien.common.currency.SpiritStoneItem;
 import com.tutien.common.currency.SpiritStoneConversionMenu;
 import com.tutien.common.refining.*;
 import com.tutien.common.skill.SkillManualItem;
+import net.minecraft.ChatFormatting;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
@@ -51,7 +52,7 @@ public class ModItems {
                         serverPlayer.openMenu(new MenuProvider() {
                             @Override
                             public Component getDisplayName() {
-                                return Component.literal("Giao Diện Quy Đổi Linh Thạch");
+                                return Component.translatable("gui.tutien.convert.title");
                             }
 
                             @Nullable
@@ -66,7 +67,7 @@ public class ModItems {
 
                 @Override
                 public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
-                    tooltipComponents.add(Component.literal("§6Linh Lung Bảo Kính: §eNhấp chuột phải để mở giao diện quy đổi linh thạch."));
+                    tooltipComponents.add(Component.translatable("tooltip.tutien.linh_thach_quy_doi_item"));
                     super.appendHoverText(stack, context, tooltipComponents, tooltipFlag);
                 }
             });
@@ -213,20 +214,20 @@ public class ModItems {
 
     // ================= 8. PHÁP BẢO GIÁP TRỤ (Đạo Bào) =================
     public static final Supplier<Item> HOANG_DAO_BAO_MU = ITEMS.register("hoang_dao_bao_mu",
-            () -> new TreasureArmorItem(TuTienArmorMaterials.HOANG_DAO_BAO, ArmorItem.Type.HELMET, "Hoàng Cấp", "§e", 0.5f, new Item.Properties()));
+            () -> new TreasureArmorItem(TuTienArmorMaterials.HOANG_DAO_BAO, ArmorItem.Type.HELMET, "tutien.tier.yellow", ChatFormatting.YELLOW, 0.5f, new Item.Properties()));
     public static final Supplier<Item> HOANG_DAO_BAO_GIAP = ITEMS.register("hoang_dao_bao_giap",
-            () -> new TreasureArmorItem(TuTienArmorMaterials.HOANG_DAO_BAO, ArmorItem.Type.CHESTPLATE, "Hoàng Cấp", "§e", 1.0f, new Item.Properties()));
+            () -> new TreasureArmorItem(TuTienArmorMaterials.HOANG_DAO_BAO, ArmorItem.Type.CHESTPLATE, "tutien.tier.yellow", ChatFormatting.YELLOW, 1.0f, new Item.Properties()));
     public static final Supplier<Item> HOANG_DAO_BAO_QUAN = ITEMS.register("hoang_dao_bao_quan",
-            () -> new TreasureArmorItem(TuTienArmorMaterials.HOANG_DAO_BAO, ArmorItem.Type.LEGGINGS, "Hoàng Cấp", "§e", 0.8f, new Item.Properties()));
+            () -> new TreasureArmorItem(TuTienArmorMaterials.HOANG_DAO_BAO, ArmorItem.Type.LEGGINGS, "tutien.tier.yellow", ChatFormatting.YELLOW, 0.8f, new Item.Properties()));
     public static final Supplier<Item> HOANG_DAO_BAO_GIAY = ITEMS.register("hoang_dao_bao_giay",
-            () -> new TreasureArmorItem(TuTienArmorMaterials.HOANG_DAO_BAO, ArmorItem.Type.BOOTS, "Hoàng Cấp", "§e", 0.5f, new Item.Properties()));
+            () -> new TreasureArmorItem(TuTienArmorMaterials.HOANG_DAO_BAO, ArmorItem.Type.BOOTS, "tutien.tier.yellow", ChatFormatting.YELLOW, 0.5f, new Item.Properties()));
 
     public static final Supplier<Item> HUYEN_DAO_BAO_GIAP = ITEMS.register("huyen_dao_bao_giap",
-            () -> new TreasureArmorItem(TuTienArmorMaterials.HUYEN_DAO_BAO, ArmorItem.Type.CHESTPLATE, "Huyền Cấp", "§9", 2.0f, new Item.Properties()));
+            () -> new TreasureArmorItem(TuTienArmorMaterials.HUYEN_DAO_BAO, ArmorItem.Type.CHESTPLATE, "tutien.tier.mystic", ChatFormatting.BLUE, 2.0f, new Item.Properties()));
     public static final Supplier<Item> DIA_DAO_BAO_GIAP = ITEMS.register("dia_dao_bao_giap",
-            () -> new TreasureArmorItem(TuTienArmorMaterials.DIA_DAO_BAO, ArmorItem.Type.CHESTPLATE, "Địa Cấp", "§5", 3.5f, new Item.Properties()));
+            () -> new TreasureArmorItem(TuTienArmorMaterials.DIA_DAO_BAO, ArmorItem.Type.CHESTPLATE, "tutien.tier.earth", ChatFormatting.DARK_PURPLE, 3.5f, new Item.Properties()));
     public static final Supplier<Item> THIEN_DAO_BAO_GIAP = ITEMS.register("thien_dao_bao_giap",
-            () -> new TreasureArmorItem(TuTienArmorMaterials.THIEN_DAO_BAO, ArmorItem.Type.CHESTPLATE, "Thiên Cấp", "§6§l", 6.0f, new Item.Properties()));
+            () -> new TreasureArmorItem(TuTienArmorMaterials.THIEN_DAO_BAO, ArmorItem.Type.CHESTPLATE, "tutien.tier.heaven", ChatFormatting.GOLD, 6.0f, new Item.Properties()));
 
     // ================= 9. PHÁP BẢO PHỤ TRỢ (Curios/Combat) =================
     public static final Supplier<Item> HO_TAM_KINH = ITEMS.register("ho_tam_kinh",

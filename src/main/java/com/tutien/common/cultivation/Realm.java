@@ -1,6 +1,8 @@
 package com.tutien.common.cultivation;
 
 import com.tutien.common.config.TuTienConfig;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 
 public enum Realm {
     LUYEN_KHI(0, "Luyện Khí", "tutien:truc_co_dan", 20.0f, 2.0f, 1.0f, 100.0f),
@@ -14,16 +16,16 @@ public enum Realm {
     DANG_TIEN(8, "Đăng Tiên", "", 1500.0f, 130.0f, 55.0f, 12000.0f);
 
     private final int id;
-    private final String displayName;
+    private final String defaultName;
     private final String nextBreakthroughPillId;
     private final float baseHealthBonus;
     private final float baseAttackBonus;
     private final float baseArmorBonus;
     private final float baseMaxQi;
 
-    Realm(int id, String displayName, String nextBreakthroughPillId, float baseHealthBonus, float baseAttackBonus, float baseArmorBonus, float baseMaxQi) {
+    Realm(int id, String defaultName, String nextBreakthroughPillId, float baseHealthBonus, float baseAttackBonus, float baseArmorBonus, float baseMaxQi) {
         this.id = id;
-        this.displayName = displayName;
+        this.defaultName = defaultName;
         this.nextBreakthroughPillId = nextBreakthroughPillId;
         this.baseHealthBonus = baseHealthBonus;
         this.baseAttackBonus = baseAttackBonus;
@@ -35,8 +37,16 @@ public enum Realm {
         return id;
     }
 
+    public String getTranslationKey() {
+        return "realm.tutien." + name().toLowerCase();
+    }
+
+    public MutableComponent getDisplayNameComponent() {
+        return Component.translatable(getTranslationKey());
+    }
+
     public String getDisplayName() {
-        return displayName;
+        return defaultName;
     }
 
     public String getNextBreakthroughPillId() {
@@ -72,9 +82,6 @@ public enum Realm {
         return this;
     }
 
-    /**
-     * Tính toán lượng tu vi cần thiết để hoàn thành tầng hiện tại
-     */
     public double calculateRequiredTuVi(int layer) {
         double base = TuTienConfig.TU_VI_BASE_REQUIREMENT.get();
         double layerMult = TuTienConfig.TU_VI_LAYER_MULTIPLIER.get();

@@ -38,9 +38,9 @@ public record C2SSpiritStoneConvertPayload(int action) implements CustomPacketPa
                         if (SpiritStoneHelper.hasEnough(player, 1000L)) {
                             SpiritStoneHelper.deductValue(player, 1000L);
                             give(player, new ItemStack(ModItems.TRUNG_PHAM_LINH_THACH.get(), 1));
-                            player.sendSystemMessage(Component.literal("§a[Quy Đổi] Thành công đổi 1.000 Hạ Phẩm -> 1 Trung Phẩm Linh Thạch!"));
+                            player.sendSystemMessage(Component.translatable("tutien.message.convert_low_to_mid_success"));
                         } else {
-                            player.sendSystemMessage(Component.literal("§c[Quy Đổi] Bạn không đủ 1.000 Hạ Phẩm Linh Thạch!"));
+                            player.sendSystemMessage(Component.translatable("tutien.message.convert_low_to_mid_fail"));
                         }
                     }
                     case 1 -> {
@@ -48,9 +48,9 @@ public record C2SSpiritStoneConvertPayload(int action) implements CustomPacketPa
                         if (countItems(player, ModItems.TRUNG_PHAM_LINH_THACH.get()) >= 1000) {
                             shrinkItems(player, ModItems.TRUNG_PHAM_LINH_THACH.get(), 1000);
                             give(player, new ItemStack(ModItems.THUONG_PHAM_LINH_THACH.get(), 1));
-                            player.sendSystemMessage(Component.literal("§a[Quy Đổi] Thành công đổi 1.000 Trung Phẩm -> 1 Thượng Phẩm Linh Thạch!"));
+                            player.sendSystemMessage(Component.translatable("tutien.message.convert_mid_to_high_success"));
                         } else {
-                            player.sendSystemMessage(Component.literal("§c[Quy Đổi] Bạn không đủ 1.000 Trung Phẩm Linh Thạch!"));
+                            player.sendSystemMessage(Component.translatable("tutien.message.convert_mid_to_high_fail"));
                         }
                     }
                     case 2 -> {
@@ -58,9 +58,9 @@ public record C2SSpiritStoneConvertPayload(int action) implements CustomPacketPa
                         if (countItems(player, ModItems.THUONG_PHAM_LINH_THACH.get()) >= 1000) {
                             shrinkItems(player, ModItems.THUONG_PHAM_LINH_THACH.get(), 1000);
                             give(player, new ItemStack(ModItems.THAN_PHAM_LINH_THACH.get(), 1));
-                            player.sendSystemMessage(Component.literal("§6§l[Quy Đổi] Thành công đổi 1.000 Thượng Phẩm -> 1 THẦN PHẨM LINH THẠCH!"));
+                            player.sendSystemMessage(Component.translatable("tutien.message.convert_high_to_divine_success"));
                         } else {
-                            player.sendSystemMessage(Component.literal("§c[Quy Đổi] Bạn không đủ 1.000 Thượng Phẩm Linh Thạch!"));
+                            player.sendSystemMessage(Component.translatable("tutien.message.convert_high_to_divine_fail"));
                         }
                     }
                     case 3 -> {
@@ -68,9 +68,9 @@ public record C2SSpiritStoneConvertPayload(int action) implements CustomPacketPa
                         if (countItems(player, ModItems.THAN_PHAM_LINH_THACH.get()) >= 1) {
                             shrinkItems(player, ModItems.THAN_PHAM_LINH_THACH.get(), 1);
                             SpiritStoneHelper.giveValue(player, 1000000000L);
-                            player.sendSystemMessage(Component.literal("§a[Quy Đổi] Thành công phân rã 1 Thần Phẩm Linh Thạch!"));
+                            player.sendSystemMessage(Component.translatable("tutien.message.degrade_divine_success"));
                         } else {
-                            player.sendSystemMessage(Component.literal("§c[Quy Đổi] Bạn không có Thần Phẩm Linh Thạch!"));
+                            player.sendSystemMessage(Component.translatable("tutien.message.degrade_divine_fail"));
                         }
                     }
                     case 4 -> {
@@ -78,9 +78,9 @@ public record C2SSpiritStoneConvertPayload(int action) implements CustomPacketPa
                         if (countItems(player, ModItems.THUONG_PHAM_LINH_THACH.get()) >= 1) {
                             shrinkItems(player, ModItems.THUONG_PHAM_LINH_THACH.get(), 1);
                             SpiritStoneHelper.giveValue(player, 1000000L);
-                            player.sendSystemMessage(Component.literal("§a[Quy Đổi] Thành công phân rã 1 Thượng Phẩm Linh Thạch!"));
+                            player.sendSystemMessage(Component.translatable("tutien.message.degrade_high_success"));
                         } else {
-                            player.sendSystemMessage(Component.literal("§c[Quy Đổi] Bạn không có Thượng Phẩm Linh Thạch!"));
+                            player.sendSystemMessage(Component.translatable("tutien.message.degrade_high_fail"));
                         }
                     }
                     case 5 -> {
@@ -88,9 +88,9 @@ public record C2SSpiritStoneConvertPayload(int action) implements CustomPacketPa
                         if (countItems(player, ModItems.TRUNG_PHAM_LINH_THACH.get()) >= 1) {
                             shrinkItems(player, ModItems.TRUNG_PHAM_LINH_THACH.get(), 1);
                             SpiritStoneHelper.giveValue(player, 1000L);
-                            player.sendSystemMessage(Component.literal("§a[Quy Đổi] Thành công phân rã 1 Trung Phẩm Linh Thạch!"));
+                            player.sendSystemMessage(Component.translatable("tutien.message.degrade_mid_success"));
                         } else {
-                            player.sendSystemMessage(Component.literal("§c[Quy Đổi] Bạn không có Trung Phẩm Linh Thạch!"));
+                            player.sendSystemMessage(Component.translatable("tutien.message.degrade_mid_fail"));
                         }
                     }
                     case 6 -> {
@@ -105,7 +105,7 @@ public record C2SSpiritStoneConvertPayload(int action) implements CustomPacketPa
                             }
                             // Re-give compactly
                             SpiritStoneHelper.giveValue(player, totalVal);
-                            player.sendSystemMessage(Component.literal("§a[Quy Đổi] Đã nén và tối ưu hóa toàn bộ linh thạch trong túi đồ!"));
+                            player.sendSystemMessage(Component.translatable("tutien.message.convert_optimize_success"));
                         }
                     }
                 }

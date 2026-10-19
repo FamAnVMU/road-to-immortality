@@ -2,6 +2,7 @@ package com.tutien.common.currency;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
@@ -10,25 +11,28 @@ import java.util.List;
 
 public class SpiritStoneItem extends Item {
     public enum Quality {
-        HA_PHAM(1, "Hạ Phẩm", ChatFormatting.WHITE, 1L),
-        TRUNG_PHAM(2, "Trung Phẩm", ChatFormatting.GREEN, 1000L),
-        THUONG_PHAM(3, "Thượng Phẩm", ChatFormatting.AQUA, 1000000L),
-        THAN_PHAM(4, "Thần Phẩm", ChatFormatting.GOLD, 1000000000L);
+        HA_PHAM(1, "quality.tutien.ha_pham", ChatFormatting.WHITE, 1L),
+        TRUNG_PHAM(2, "quality.tutien.trung_pham", ChatFormatting.GREEN, 1000L),
+        THUONG_PHAM(3, "quality.tutien.thuong_pham", ChatFormatting.AQUA, 1000000L),
+        THAN_PHAM(4, "quality.tutien.than_pham", ChatFormatting.GOLD, 1000000000L);
 
         private final int tier;
-        private final String name;
+        private final String translationKey;
         private final ChatFormatting color;
         private final long baseValue; // Equivalent value in Hạ Phẩm
 
-        Quality(int tier, String name, ChatFormatting color, long baseValue) {
+        Quality(int tier, String translationKey, ChatFormatting color, long baseValue) {
             this.tier = tier;
-            this.name = name;
+            this.translationKey = translationKey;
             this.color = color;
             this.baseValue = baseValue;
         }
 
         public int getTier() { return tier; }
-        public String getName() { return name; }
+        public String getTranslationKey() { return translationKey; }
+        public MutableComponent getNameComponent() {
+            return Component.translatable(translationKey).withStyle(color);
+        }
         public ChatFormatting getColor() { return color; }
         public long getBaseValue() { return baseValue; }
     }
@@ -46,16 +50,16 @@ public class SpiritStoneItem extends Item {
 
     @Override
     public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
-        tooltipComponents.add(Component.literal("§7Phẩm chất: " + quality.getColor() + quality.getName()));
-        tooltipComponents.add(Component.literal("§eĐơn vị tiền tệ và tinh hoa linh khí của Tu Tiên giới."));
+        tooltipComponents.add(Component.translatable("tooltip.tutien.spirit_stone_quality", quality.getNameComponent()).withStyle(ChatFormatting.GRAY));
+        tooltipComponents.add(Component.translatable("tooltip.tutien.spirit_stone_desc").withStyle(ChatFormatting.YELLOW));
         if (quality == Quality.HA_PHAM) {
-            tooltipComponents.add(Component.literal("§81.000 Hạ Phẩm = 1 Trung Phẩm"));
+            tooltipComponents.add(Component.translatable("tooltip.tutien.spirit_stone_exchange_1").withStyle(ChatFormatting.DARK_GRAY));
         } else if (quality == Quality.TRUNG_PHAM) {
-            tooltipComponents.add(Component.literal("§81.000 Trung Phẩm = 1 Thượng Phẩm"));
+            tooltipComponents.add(Component.translatable("tooltip.tutien.spirit_stone_exchange_2").withStyle(ChatFormatting.DARK_GRAY));
         } else if (quality == Quality.THUONG_PHAM) {
-            tooltipComponents.add(Component.literal("§81.000 Thượng Phẩm = 1 Thần Phẩm"));
+            tooltipComponents.add(Component.translatable("tooltip.tutien.spirit_stone_exchange_3").withStyle(ChatFormatting.DARK_GRAY));
         } else {
-            tooltipComponents.add(Component.literal("§6Linh thạch vô thượng tương đương 1 tỷ Hạ Phẩm linh thạch!"));
+            tooltipComponents.add(Component.translatable("tooltip.tutien.spirit_stone_exchange_4").withStyle(ChatFormatting.GOLD));
         }
         super.appendHoverText(stack, context, tooltipComponents, tooltipFlag);
     }

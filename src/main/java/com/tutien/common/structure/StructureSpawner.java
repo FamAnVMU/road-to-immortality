@@ -27,7 +27,7 @@ public class StructureSpawner {
         };
 
         if (fileName.isEmpty()) {
-            player.sendSystemMessage(Component.literal("§c[Tu Tiên] Tên công trình không hợp lệ! Hãy chọn: thitran, thuongvan, conluan."));
+            player.sendSystemMessage(Component.translatable("tutien.structure.invalid_name"));
             return false;
         }
 
@@ -38,17 +38,17 @@ public class StructureSpawner {
         }
 
         if (!file.exists()) {
-            player.sendSystemMessage(Component.literal("§c[Tu Tiên] Không tìm thấy file: structures/" + fileName));
+            player.sendSystemMessage(Component.translatable("tutien.structure.file_not_found", fileName));
             return false;
         }
 
-        player.sendSystemMessage(Component.literal("§e[Tu Tiên] Đang kiến thiết công trình " + structureName + "... Xin đợi trong giây lát."));
+        player.sendSystemMessage(Component.translatable("tutien.structure.spawning", structureName));
         int placed = LitematicParser.placeLitematic(level, file, pos);
 
         // Populate Facilities and NPCs
         populateStructureFacilities(level, structureName.toLowerCase(), pos);
 
-        player.sendSystemMessage(Component.literal("§a§l[Tu Tiên] Khởi tạo thành công " + structureName + "! Đã kiến tạo " + placed + " khối và thiết lập các NPC chưởng quản!"));
+        player.sendSystemMessage(Component.translatable("tutien.structure.success", structureName, placed));
         return true;
     }
 

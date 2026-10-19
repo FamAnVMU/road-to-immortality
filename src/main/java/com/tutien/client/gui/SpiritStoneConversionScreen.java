@@ -24,37 +24,37 @@ public class SpiritStoneConversionScreen extends AbstractContainerScreen<SpiritS
         int top = this.topPos;
 
         // Button 1: 1000 Hạ -> 1 Trung
-        addRenderableWidget(Button.builder(Component.literal("1.000 Hạ ➔ 1 Trung Phẩm"),
+        addRenderableWidget(Button.builder(Component.translatable("gui.tutien.convert.low_to_mid"),
                 btn -> PacketDistributor.sendToServer(new C2SSpiritStoneConvertPayload(0)))
                 .bounds(left + 15, top + 25, 190, 16).build());
 
         // Button 2: 1000 Trung -> 1 Thượng
-        addRenderableWidget(Button.builder(Component.literal("1.000 Trung ➔ 1 Thượng Phẩm"),
+        addRenderableWidget(Button.builder(Component.translatable("gui.tutien.convert.mid_to_high"),
                 btn -> PacketDistributor.sendToServer(new C2SSpiritStoneConvertPayload(1)))
                 .bounds(left + 15, top + 44, 190, 16).build());
 
         // Button 3: 1000 Thượng -> 1 Thần
-        addRenderableWidget(Button.builder(Component.literal("1.000 Thượng ➔ 1 THẦN PHẨM"),
+        addRenderableWidget(Button.builder(Component.translatable("gui.tutien.convert.high_to_divine"),
                 btn -> PacketDistributor.sendToServer(new C2SSpiritStoneConvertPayload(2)))
                 .bounds(left + 15, top + 63, 190, 16).build());
 
         // Button 4: 1 Thần -> 1000 Thượng
-        addRenderableWidget(Button.builder(Component.literal("Phân rã 1 Thần ➔ 1.000 Thượng"),
+        addRenderableWidget(Button.builder(Component.translatable("gui.tutien.convert.degrade_divine"),
                 btn -> PacketDistributor.sendToServer(new C2SSpiritStoneConvertPayload(3)))
                 .bounds(left + 15, top + 82, 190, 16).build());
 
         // Button 5: 1 Thượng -> 1000 Trung
-        addRenderableWidget(Button.builder(Component.literal("Phân rã 1 Thượng ➔ 1.000 Trung"),
+        addRenderableWidget(Button.builder(Component.translatable("gui.tutien.convert.degrade_high"),
                 btn -> PacketDistributor.sendToServer(new C2SSpiritStoneConvertPayload(4)))
                 .bounds(left + 15, top + 101, 190, 16).build());
 
         // Button 6: 1 Trung -> 1000 Hạ
-        addRenderableWidget(Button.builder(Component.literal("Phân rã 1 Trung ➔ 1.000 Hạ"),
+        addRenderableWidget(Button.builder(Component.translatable("gui.tutien.convert.degrade_mid"),
                 btn -> PacketDistributor.sendToServer(new C2SSpiritStoneConvertPayload(5)))
                 .bounds(left + 15, top + 120, 190, 16).build());
 
         // Button 7: Tối ưu hóa linh thạch
-        addRenderableWidget(Button.builder(Component.literal("§6Tối Ưu Hóa Túi Linh Thạch"),
+        addRenderableWidget(Button.builder(Component.translatable("gui.tutien.convert.optimize"),
                 btn -> PacketDistributor.sendToServer(new C2SSpiritStoneConvertPayload(6)))
                 .bounds(left + 15, top + 139, 190, 18).build());
     }
@@ -68,7 +68,7 @@ public class SpiritStoneConversionScreen extends AbstractContainerScreen<SpiritS
 
     @Override
     protected void renderLabels(GuiGraphics graphics, int mouseX, int mouseY) {
-        graphics.drawString(this.font, "§6✦ QUY ĐỔI LINH THẠCH ✦", 40, 8, 0xFFFFFF, false);
+        graphics.drawCenteredString(this.font, Component.translatable("gui.tutien.convert.title"), this.imageWidth / 2, 8, 0xFFFFFF);
     }
 
     @Override
@@ -80,7 +80,7 @@ public class SpiritStoneConversionScreen extends AbstractContainerScreen<SpiritS
         // Display total player wealth
         if (minecraft != null && minecraft.player != null) {
             long total = SpiritStoneHelper.getTotalValue(minecraft.player);
-            graphics.drawString(this.font, "§eTổng tài sản: §f" + total + " §7(Hạ phẩm)", this.leftPos + 15, this.topPos + 160, 0xFFFFFF);
+            graphics.drawString(this.font, Component.translatable("gui.tutien.convert.total_wealth", total), this.leftPos + 15, this.topPos + 160, 0xFFFFFF);
         }
     }
 }
