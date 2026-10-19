@@ -37,7 +37,12 @@ public class CommonEvents {
 
             // Check if player moved while meditating
             if (data.isMeditating()) {
-                if (player.getDeltaMovement().horizontalDistance() > 0.08) {
+                double dx = player.getX() - player.xOld;
+                double dy = player.getY() - player.yOld;
+                double dz = player.getZ() - player.zOld;
+                boolean hasMoved = (dx * dx + dz * dz > 0.0004) || Math.abs(dy) > 0.08 || player.isSprinting() || player.isFallFlying();
+
+                if (hasMoved) {
                     data.setMeditating(false);
                     player.sendSystemMessage(Component.translatable("tutien.message.meditation_interrupted_movement"));
                     ModPayloads.syncToPlayer(player);

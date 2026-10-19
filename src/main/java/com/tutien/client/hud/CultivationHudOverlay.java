@@ -29,23 +29,42 @@ public class CultivationHudOverlay {
         int screenWidth = mc.getWindow().getGuiScaledWidth();
         int screenHeight = mc.getWindow().getGuiScaledHeight();
 
-        // 1. LingQi Bar (Bottom Left or Top Left)
-        int qiX = 10;
-        int qiY = 10;
-        int qiWidth = 110;
-        int qiHeight = 12;
+        // 1. Spiritual Qi Bar (Positioned directly above the vanilla food/hunger bar)
+        int midX = screenWidth / 2;
+        int qiX = midX + 10;
+        int qiWidth = 81;
+        int qiHeight = 6;
 
-        float qiRatio = Math.max(0.0f, Math.min(1.0f, ClientCultivationCache.lingQi / Math.max(1.0f, ClientCultivationCache.maxLingQi)));
+        // Base position directly above food bar (y = screenHeight - 39)
+        int qiY = screenHeight - 47;
+
+        // If player is submerged / air bubbles are visible, move above air bubbles
+        if (mc.player.getAirSupply() < mc.player.getMaxAirSupply()) {
+            qiY -= 10;
+        }
+
+        float maxQi = Math.max(1.0f, ClientCultivationCache.maxLingQi);
+        float qiRatio = Math.max(0.0f, Math.min(1.0f, ClientCultivationCache.lingQi / maxQi));
         int fillWidth = (int) (qiWidth * qiRatio);
 
         // Background & Border
-        graphics.fill(qiX - 1, qiY - 1, qiX + qiWidth + 1, qiY + qiHeight + 1, 0xAA000000);
-        graphics.fill(qiX, qiY, qiX + qiWidth, qiY + qiHeight, 0xFF1A1A2E);
-        // LingQi Fill (Deep Cyan / Blue)
-        graphics.fill(qiX, qiY, qiX + fillWidth, qiY + qiHeight, 0xFF00ADB5);
+        graphics.fill(qiX - 1, qiY - 1, qiX + qiWidth + 1, qiY + qiHeight + 1, 0xCC000000);
+        graphics.fill(qiX, qiY, qiX + qiWidth, qiY + qiHeight, 0xEE0A1118);
 
-        String qiText = Component.translatable("hud.tutien.lingqi", (int) ClientCultivationCache.lingQi, (int) ClientCultivationCache.maxLingQi).getString();
-        graphics.drawString(mc.font, qiText, qiX + 4, qiY + 2, 0xFFFFFF, true);
+        // Radiant Spiritual Qi Fill (Spiritual Cyan / Blue Gradient)
+        if (fillWidth > 0) {
+            graphics.fillGradient(qiX, qiY, qiX + fillWidth, qiY + qiHeight, 0xFF00E5FF, 0xFF0091EA);
+        }
+
+        // Compact centered numeric overlay (e.g. "100/100")
+        String qiText = (int) ClientCultivationCache.lingQi + "/" + (int) maxQi;
+        int textWidth = mc.font.width(qiText);
+        float scale = 0.75f;
+        graphics.pose().pushPose();
+        graphics.pose().translate(qiX + (qiWidth - textWidth * scale) / 2.0f, qiY - 0.5f, 0.0f);
+        graphics.pose().scale(scale, scale, 1.0f);
+        graphics.drawString(mc.font, qiText, 0, 0, 0xFFFFFF, true);
+        graphics.pose().popPose();
 
         // 2. Cultivation & Meditation HUD (Center Top when meditating or active)
         if (ClientCultivationCache.isMeditating) {

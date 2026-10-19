@@ -121,6 +121,17 @@
   "tutien.realm.dang_tien": "Immortal Ascension",
   "tutien.realm.layer": "Layer %s",
 
+  "realm.tutien.luyen_khi": "Qi Condensation",
+  "realm.tutien.truc_co": "Foundation Establishment",
+  "realm.tutien.kim_dan": "Golden Core",
+  "realm.tutien.nguyen_anh": "Nascent Soul",
+  "realm.tutien.hoa_than": "Soul Formation",
+  "realm.tutien.dong_hu": "Void Refinement",
+  "realm.tutien.do_kiep": "Tribulation Crossing",
+  "realm.tutien.vu_hoa": "Ascension",
+  "realm.tutien.dang_tien": "Immortal Ascension",
+  "realm.tutien.layer": "Layer %s",
+
   "tutien.quality.ha_pham": "Low Grade",
   "tutien.quality.trung_pham": "Mid Grade",
   "tutien.quality.thuong_pham": "High Grade",

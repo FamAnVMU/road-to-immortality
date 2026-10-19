@@ -56,6 +56,14 @@ public class ClientKeyBindings {
                 PacketDistributor.sendToServer(new C2SToggleMeditationPayload());
             }
 
+            // Immediately interrupt meditation if player moves, walks, jumps, or sprints
+            if (ClientCultivationCache.isMeditating && mc.player.input != null) {
+                if (mc.player.input.hasForwardImpulse() || mc.player.input.leftImpulse != 0 || mc.player.input.jumping || mc.player.isSprinting()) {
+                    ClientCultivationCache.isMeditating = false;
+                    PacketDistributor.sendToServer(new C2SToggleMeditationPayload());
+                }
+            }
+
             while (KEY_CULTIVATION_MENU.consumeClick()) {
                 if (mc.screen == null) {
                     mc.setScreen(new CultivationScreen());

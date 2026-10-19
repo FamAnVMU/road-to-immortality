@@ -38,7 +38,7 @@ public enum Realm {
     }
 
     public String getTranslationKey() {
-        return "realm.tutien." + name().toLowerCase();
+        return "tutien.realm." + name().toLowerCase();
     }
 
     public MutableComponent getDisplayNameComponent() {

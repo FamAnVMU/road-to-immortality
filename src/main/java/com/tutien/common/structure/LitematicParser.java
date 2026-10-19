@@ -24,14 +24,25 @@ public class LitematicParser {
 
     /**
      * Tải và đặt cấu trúc từ file .litematic vào thế giới Minecraft tại vị trí pos.
-     * Trả về số lượng block đã được đặt thành công.
      */
     public static int placeLitematic(ServerLevel level, File file, BlockPos origin) {
         if (!file.exists()) {
             return 0;
         }
-
         try (InputStream stream = new FileInputStream(file)) {
+            return placeLitematic(level, stream, origin);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return 0;
+        }
+    }
+
+    /**
+     * Tải và đặt cấu trúc từ InputStream (resource trong JAR hoặc file) vào thế giới Minecraft tại vị trí pos.
+     * Trả về số lượng block đã được đặt thành công.
+     */
+    public static int placeLitematic(ServerLevel level, InputStream stream, BlockPos origin) {
+        try {
             CompoundTag root = NbtIo.readCompressed(stream, NbtAccounter.unlimitedHeap());
             if (root == null || !root.contains("Regions", Tag.TAG_COMPOUND)) {
                 return 0;

@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "minecraft:item/diamond"
+    "layer0": "tutien:item/thuong_pham_linh_thach"
   }
 }

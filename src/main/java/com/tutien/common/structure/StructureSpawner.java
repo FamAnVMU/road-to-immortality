@@ -19,31 +19,54 @@ import java.io.File;
 public class StructureSpawner {
 
     public static boolean spawnStructure(ServerLevel level, String structureName, BlockPos pos, ServerPlayer player) {
-        String fileName = switch (structureName.toLowerCase()) {
+        String resourceName = switch (structureName.toLowerCase()) {
+            case "thitran", "thi_tran" -> "thitran.litematic";
+            case "thuongvan", "thuong_van" -> "thuongvan.litematic";
+            case "conluan", "con_luan" -> "conluan.litematic";
+            default -> "";
+        };
+
+        String legacyFileName = switch (structureName.toLowerCase()) {
             case "thitran", "thi_tran" -> "Thị trấn.litematic";
             case "thuongvan", "thuong_van" -> "Thương Vân Tông.litematic";
             case "conluan", "con_luan" -> "Côn Luận Thánh Địa.litematic";
             default -> "";
         };
 
-        if (fileName.isEmpty()) {
+        if (resourceName.isEmpty()) {
             player.sendSystemMessage(Component.translatable("tutien.structure.invalid_name"));
             return false;
         }
 
-        // Try current run directory or parent structures folder
-        File file = new File("structures/" + fileName);
-        if (!file.exists()) {
-            file = new File("../structures/" + fileName);
-        }
-
-        if (!file.exists()) {
-            player.sendSystemMessage(Component.translatable("tutien.structure.file_not_found", fileName));
-            return false;
-        }
-
         player.sendSystemMessage(Component.translatable("tutien.structure.spawning", structureName));
-        int placed = LitematicParser.placeLitematic(level, file, pos);
+
+        int placed = 0;
+        // 1. First attempt: Load directly from bundled mod resources inside the JAR
+        java.io.InputStream stream = StructureSpawner.class.getResourceAsStream("/assets/tutien/structures/" + resourceName);
+        if (stream == null) {
+            stream = StructureSpawner.class.getClassLoader().getResourceAsStream("assets/tutien/structures/" + resourceName);
+        }
+
+        if (stream != null) {
+            try (java.io.InputStream in = stream) {
+                placed = LitematicParser.placeLitematic(level, in, pos);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else {
+            // 2. Fallback: Search on filesystem (for local custom override)
+            File file = new File("structures/" + legacyFileName);
+            if (!file.exists()) file = new File("structures/" + resourceName);
+            if (!file.exists()) file = new File("../structures/" + legacyFileName);
+            if (!file.exists()) file = new File("../structures/" + resourceName);
+
+            if (file.exists()) {
+                placed = LitematicParser.placeLitematic(level, file, pos);
+            } else {
+                player.sendSystemMessage(Component.translatable("tutien.structure.file_not_found", resourceName));
+                return false;
+            }
+        }
 
         // Populate Facilities and NPCs
         populateStructureFacilities(level, structureName.toLowerCase(), pos);

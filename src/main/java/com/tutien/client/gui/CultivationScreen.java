@@ -45,7 +45,7 @@ public class CultivationScreen extends Screen {
 
     @Override
     public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
-        // Background dim
+        // Render world background dimming first
         this.renderBackground(graphics, mouseX, mouseY, partialTick);
 
         int centerX = this.width / 2;
@@ -55,12 +55,14 @@ public class CultivationScreen extends Screen {
         int left = centerX - panelWidth / 2;
         int top = centerY - panelHeight / 2;
 
-        // Panel Window
-        graphics.fill(left, top, left + panelWidth, top + panelHeight, 0xEE1A1A24);
-        graphics.fill(left + 2, top + 2, left + panelWidth - 2, top + panelHeight - 2, 0xEE0F0F17);
+        // Solid, crisp Cultivation Panel with Golden Frame (No Blur)
+        graphics.fill(left - 2, top - 2, left + panelWidth + 2, top + panelHeight + 2, 0xFF05050A);
+        graphics.fill(left, top, left + panelWidth, top + panelHeight, 0xFFD4AF37); // Golden border
+        graphics.fill(left + 2, top + 2, left + panelWidth - 2, top + panelHeight - 2, 0xFF14141E); // Main dark slate
+        graphics.fill(left + 2, top + 2, left + panelWidth - 2, top + 22, 0xFF1E1E2E); // Header banner
 
-        // Header
-        graphics.drawCenteredString(this.font, Component.translatable("gui.tutien.cultivation.header"), centerX, top + 8, 0xFFFFFF);
+        // Header Title
+        graphics.drawCenteredString(this.font, Component.translatable("gui.tutien.cultivation.header"), centerX, top + 7, 0xFFD4AF37);
 
         Realm currentRealm = Realm.fromId(ClientCultivationCache.realm);
         double reqTuVi = currentRealm.calculateRequiredTuVi(ClientCultivationCache.layer);
@@ -68,11 +70,11 @@ public class CultivationScreen extends Screen {
 
         // Left Column: Cảnh giới & Tu vi
         int col1X = left + 15;
-        graphics.drawString(this.font, Component.translatable("gui.tutien.cultivation.current_realm"), col1X, top + 25, 0xFFFFFF);
-        graphics.drawString(this.font, Component.literal("§6§l").append(currentRealm.getDisplayNameComponent()).append(" - ").append(Component.translatable("tutien.realm.layer", ClientCultivationCache.layer)), col1X, top + 38, 0xFFFFFF);
+        graphics.drawString(this.font, Component.translatable("gui.tutien.cultivation.current_realm"), col1X, top + 28, 0xCCCCCC);
+        graphics.drawString(this.font, Component.literal("§6§l").append(currentRealm.getDisplayNameComponent()).append(" - ").append(Component.translatable("tutien.realm.layer", ClientCultivationCache.layer)), col1X, top + 40, 0xFFFFFF);
 
         // Tu Vi Progress Bar
-        graphics.drawString(this.font, Component.translatable("gui.tutien.cultivation.tuvi_progress"), col1X, top + 55, 0xFFFFFF);
+        graphics.drawString(this.font, Component.translatable("gui.tutien.cultivation.tuvi_progress"), col1X, top + 55, 0xCCCCCC);
         int barW = 140;
         graphics.fill(col1X, top + 67, col1X + barW, top + 77, 0xFF333333);
         graphics.fill(col1X, top + 67, col1X + (int)(barW * tuViRatio), top + 77, 0xFF4E9F3D);
@@ -92,14 +94,14 @@ public class CultivationScreen extends Screen {
 
         // Right Column: Chỉ số chiến đấu & Kỹ năng
         int col2X = left + 175;
-        graphics.drawString(this.font, Component.translatable("gui.tutien.cultivation.character_attributes"), col2X, top + 25, 0xFFFFFF);
-        graphics.drawString(this.font, Component.translatable("gui.tutien.cultivation.lingqi", (int)ClientCultivationCache.lingQi, (int)ClientCultivationCache.maxLingQi), col2X, top + 38, 0xFFFFFF);
-        graphics.drawString(this.font, Component.translatable("gui.tutien.cultivation.bonus_hp", (int)currentRealm.getBaseHealthBonus()), col2X, top + 51, 0xFFFFFF);
-        graphics.drawString(this.font, Component.translatable("gui.tutien.cultivation.bonus_attack", (int)currentRealm.getBaseAttackBonus()), col2X, top + 64, 0xFFFFFF);
-        graphics.drawString(this.font, Component.translatable("gui.tutien.cultivation.bonus_armor", (int)currentRealm.getBaseArmorBonus()), col2X, top + 77, 0xFFFFFF);
+        graphics.drawString(this.font, Component.translatable("gui.tutien.cultivation.character_attributes"), col2X, top + 28, 0xCCCCCC);
+        graphics.drawString(this.font, Component.translatable("gui.tutien.cultivation.lingqi", (int)ClientCultivationCache.lingQi, (int)ClientCultivationCache.maxLingQi), col2X, top + 40, 0x00E5FF);
+        graphics.drawString(this.font, Component.translatable("gui.tutien.cultivation.bonus_hp", (int)currentRealm.getBaseHealthBonus()), col2X, top + 52, 0xFF5555);
+        graphics.drawString(this.font, Component.translatable("gui.tutien.cultivation.bonus_attack", (int)currentRealm.getBaseAttackBonus()), col2X, top + 64, 0xFFAA00);
+        graphics.drawString(this.font, Component.translatable("gui.tutien.cultivation.bonus_armor", (int)currentRealm.getBaseArmorBonus()), col2X, top + 76, 0x55FF55);
 
         // Kỹ năng trang bị
-        graphics.drawString(this.font, Component.translatable("gui.tutien.cultivation.equipped_skills"), col2X, top + 95, 0xFFFFFF);
+        graphics.drawString(this.font, Component.translatable("gui.tutien.cultivation.equipped_skills"), col2X, top + 95, 0xCCCCCC);
         String[] keys = {"Z", "X", "V", "R"};
         for (int i = 0; i < 4; i++) {
             String sk = ClientCultivationCache.equippedSkills[i];
@@ -107,12 +109,17 @@ public class CultivationScreen extends Screen {
             graphics.drawString(this.font, Component.literal("§7[" + keys[i] + "] §f").append(skillName), col2X, top + 110 + i * 13, 0xFFFFFF);
         }
 
-        super.render(graphics, mouseX, mouseY, partialTick);
+        // Render widgets (buttons) directly to avoid super.render invoking renderBackground again
+        for (net.minecraft.client.gui.components.Renderable renderable : this.renderables) {
+            renderable.render(graphics, mouseX, mouseY, partialTick);
+        }
 
         // Tooltip for Breakthrough Button if at Layer 9
         if (ClientCultivationCache.layer == 9 && breakthroughButton.isHovered()) {
             Realm next = currentRealm.getNext();
-            graphics.renderTooltip(this.font, Component.translatable("gui.tutien.cultivation.breakthrough_req_tooltip", next.getDisplayNameComponent(), Component.translatable("item.tutien." + currentRealm.getNextBreakthroughPillId())), mouseX, mouseY);
+            String pillId = currentRealm.getNextBreakthroughPillId();
+            String pillKey = pillId.contains(":") ? "item." + pillId.replace(':', '.') : "item.tutien." + pillId;
+            graphics.renderTooltip(this.font, Component.translatable("gui.tutien.cultivation.breakthrough_req_tooltip", next.getDisplayNameComponent(), Component.translatable(pillKey)), mouseX, mouseY);
         }
     }
 
