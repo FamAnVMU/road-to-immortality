@@ -1,0 +1,23 @@
+# Gradle
+.gradle/
+build/
+!build/libs/*.jar
+
+# Run & log files
+run/
+logs/
+
+# IDE / Editor files
+.idea/
+*.iml
+*.ipr
+*.iws
+.project
+.classpath
+.settings/
+.vscode/
+
+# OS generated files
+Thumbs.db
+Desktop.ini
+.DS_Store

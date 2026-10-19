@@ -1,9 +1,0 @@
-{
-  "replace": false,
-  "values": [
-    "tutien:hoang_dao_bao_giap",
-    "tutien:huyen_dao_bao_giap",
-    "tutien:dia_dao_bao_giap",
-    "tutien:thien_dao_bao_giap"
-  ]
-}
