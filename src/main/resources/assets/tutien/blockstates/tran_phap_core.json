@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "tutien:block/tran_phap_core"
+    }
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "tutien:ho_tam_kinh",
+    "tutien:chieu_yeu_kinh",
+    "tutien:phien_thien_an",
+    "tutien:chu_tien_tran_do"
+  ]
+}

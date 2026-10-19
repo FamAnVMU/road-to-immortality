@@ -1,0 +1,32 @@
+{
+  "itemGroup.tutien": "Tu Tiên - Xianxia RPG",
+  "key.categories.tutien": "Tu Tiên RPG",
+  "key.tutien.meditate": "Meditate / Cultivate (C)",
+  "key.tutien.menu": "Cultivation Status Menu (K)",
+  "key.tutien.skill_1": "Cast Skill Slot 1 (Z)",
+  "key.tutien.skill_2": "Cast Skill Slot 2 (X)",
+  "key.tutien.skill_3": "Cast Skill Slot 3 (V)",
+  "key.tutien.skill_4": "Cast Skill Slot 4 (R)",
+
+  "item.tutien.ha_pham_linh_thach": "Low Grade Spirit Stone",
+  "item.tutien.trung_pham_linh_thach": "Mid Grade Spirit Stone",
+  "item.tutien.thuong_pham_linh_thach": "High Grade Spirit Stone",
+  "item.tutien.than_pham_linh_thach": "Divine Grade Spirit Stone",
+  "item.tutien.linh_thach_quy_doi_item": "Spirit Stone Converter Mirror",
+
+  "block.tutien.lo_luyen_dan": "Alchemy Cauldron",
+  "block.tutien.lo_luyen_khi": "Refining Forge",
+  "block.tutien.te_dan_hoi_phuc": "Recovery Altar",
+  "block.tutien.tran_phap_core": "Cultivation Array Core",
+
+  "item.tutien.truc_co_dan": "Foundation Establishment Pill",
+  "item.tutien.kim_dan_dan": "Golden Core Pill",
+  "item.tutien.nguyen_anh_dan": "Nascent Soul Pill",
+  "item.tutien.hoa_than_dan": "Soul Formation Pill",
+  "item.tutien.dong_hu_dan": "Void Refinement Pill",
+  "item.tutien.do_kiep_dan": "Tribulation Crossing Pill",
+  "item.tutien.vu_hoa_dan": "Ascension Pill",
+  "item.tutien.dang_tien_dan": "Immortal Ascension Pill",
+
+  "entity.tutien.tutien_npc": "Cultivator NPC"
+}

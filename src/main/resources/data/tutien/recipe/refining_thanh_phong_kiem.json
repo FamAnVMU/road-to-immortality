@@ -1,0 +1,24 @@
+{
+  "type": "tutien:refining",
+  "blueprint": {
+    "item": "tutien:ban_ve_kiem"
+  },
+  "materials": [
+    {
+      "item": "minecraft:iron_ingot"
+    },
+    {
+      "item": "minecraft:diamond"
+    }
+  ],
+  "catalyst": {
+    "item": "tutien:ha_pham_linh_thach"
+  },
+  "result": {
+    "id": "tutien:thanh_phong_kiem",
+    "count": 1
+  },
+  "requiredForgeTier": 1,
+  "requiredRefiningLevel": 1,
+  "craftingTime": 120
+}

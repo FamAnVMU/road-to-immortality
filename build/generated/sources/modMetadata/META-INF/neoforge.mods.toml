@@ -1,0 +1,24 @@
+modLoader="javafml"
+loaderVersion="[4,)"
+license="MIT"
+
+[[mods]]
+modId="tutien"
+version="1.0.0"
+displayName="Tu TiÃªn"
+description='''Há» thá»ng RPG Tu TiÃªn hoÃ n chá»nh cho Minecraft 1.21.1 NeoForge'''
+authors="TuTienTeam"
+
+[[dependencies.tutien]]
+modId="neoforge"
+type="required"
+versionRange="[21.1,)"
+ordering="NONE"
+side="BOTH"
+
+[[dependencies.tutien]]
+modId="minecraft"
+type="required"
+versionRange="[1.21.1,1.22)"
+ordering="NONE"
+side="BOTH"
