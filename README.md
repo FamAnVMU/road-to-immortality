@@ -1,4 +1,4 @@
-# Road to Immortality (Đường Tu Tiên) - Minecraft 1.21.1 NeoForge
+# Road to Immortality (Con Đường Tu Tiên) - Minecraft 1.21.1 NeoForge
 
 Hệ thống RPG Tu Tiên / Tiên Hiệp (Xianxia Cultivation) hoàn chỉnh, server-authoritative, cân bằng và có chiều sâu dành cho Minecraft phiên bản **1.21.1**, mod loader **NeoForge**, ngôn ngữ **Java 21**.
 
