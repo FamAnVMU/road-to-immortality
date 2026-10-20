@@ -71,7 +71,47 @@ public class StructureSpawner {
         // Populate Facilities and NPCs
         populateStructureFacilities(level, structureName.toLowerCase(), pos);
 
+        // Record structure in world data
+        StructureTracker.get(level).recordStructure(structureName.toLowerCase(), pos);
+
         player.sendSystemMessage(Component.translatable("tutien.structure.success", structureName, placed));
+        return true;
+    }
+
+    public static boolean locateStructure(ServerLevel level, String structureName, BlockPos currentPos, ServerPlayer player) {
+        String key = switch (structureName.toLowerCase()) {
+            case "thitran", "thi_tran" -> "thitran";
+            case "thuongvan", "thuong_van" -> "thuongvan";
+            case "conluan", "con_luan" -> "conluan";
+            default -> structureName.toLowerCase();
+        };
+
+        BlockPos nearest = StructureTracker.get(level).findNearest(key, currentPos);
+        if (nearest == null) {
+            Component spawnLink = Component.literal(" [")
+                    .append(Component.translatable("tutien.structure.spawn_now_button"))
+                    .append(Component.literal("]"))
+                    .withStyle(style -> style
+                            .withColor(net.minecraft.ChatFormatting.GOLD)
+                            .withUnderlined(true)
+                            .withClickEvent(new net.minecraft.network.chat.ClickEvent(net.minecraft.network.chat.ClickEvent.Action.RUN_COMMAND, "/tutien structure spawn " + key))
+                            .withHoverEvent(new net.minecraft.network.chat.HoverEvent(net.minecraft.network.chat.HoverEvent.Action.SHOW_TEXT, Component.translatable("tutien.structure.spawn_now_hover"))));
+
+            player.sendSystemMessage(Component.translatable("tutien.structure.not_spawned_yet", structureName).append(spawnLink));
+            return false;
+        }
+
+        int dist = (int) Math.sqrt(nearest.distSqr(currentPos));
+        Component message = Component.translatable("tutien.structure.locate_found", structureName, nearest.getX(), nearest.getY(), nearest.getZ(), dist)
+                .append(Component.literal(" ")
+                        .append(Component.translatable("tutien.structure.teleport_button")
+                                .withStyle(style -> style
+                                        .withColor(net.minecraft.ChatFormatting.GREEN)
+                                        .withUnderlined(true)
+                                        .withClickEvent(new net.minecraft.network.chat.ClickEvent(net.minecraft.network.chat.ClickEvent.Action.RUN_COMMAND, "/tp @s " + nearest.getX() + " " + nearest.getY() + " " + nearest.getZ()))
+                                        .withHoverEvent(new net.minecraft.network.chat.HoverEvent(net.minecraft.network.chat.HoverEvent.Action.SHOW_TEXT, Component.translatable("tutien.structure.teleport_hover"))))));
+
+        player.sendSystemMessage(message);
         return true;
     }
 
@@ -108,8 +148,19 @@ public class StructureSpawner {
         }
     }
 
-    private static void spawnNpc(ServerLevel level, BlockPos pos, TuTienNpcRole role) {
-        TuTienNpcEntity npc = ModEntities.TUTIEN_NPC.get().create(level);
+    public static void spawnNpc(ServerLevel level, BlockPos pos, TuTienNpcRole role) {
+        net.minecraft.world.entity.EntityType<TuTienNpcEntity> type = switch (role) {
+            case DAN_DUOC -> ModEntities.NPC_DAN_DUOC.get();
+            case DAN_PHUONG -> ModEntities.NPC_DAN_PHUONG.get();
+            case PHAP_BAO -> ModEntities.NPC_PHAP_BAO.get();
+            case BAN_VE -> ModEntities.NPC_BAN_VE.get();
+            case CONG_PHAP -> ModEntities.NPC_CONG_PHAP.get();
+            case NHIEM_VU_THI_TRAN -> ModEntities.NPC_NHIEM_VU.get();
+            case TONG_MON_THUONG_VAN -> ModEntities.NPC_THUONG_VAN.get();
+            case TONG_MON_CON_LUAN -> ModEntities.NPC_CON_LUAN.get();
+        };
+
+        TuTienNpcEntity npc = type.create(level);
         if (npc != null) {
             npc.moveTo(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, 0.0f, 0.0f);
             npc.setNpcRole(role);

@@ -109,6 +109,14 @@
   "item.tutien.chu_tien_tran_do": "Immortal-Slaying Diagram (Heaven Grade)",
 
   "entity.tutien.tutien_npc": "Cultivator / Immortal",
+  "entity.tutien.npc_dan_duoc": "Pill Shopkeeper",
+  "entity.tutien.npc_dan_phuong": "Grand Alchemy Master",
+  "entity.tutien.npc_phap_bao": "Divine Weapon Master",
+  "entity.tutien.npc_ban_ve": "Grand Artifact Forger",
+  "entity.tutien.npc_cong_phap": "Scripture Pavilion Elder",
+  "entity.tutien.npc_nhiem_vu": "Town Mission Steward",
+  "entity.tutien.npc_thuong_van": "Cangyun Sect Elder",
+  "entity.tutien.npc_con_luan": "Supreme Kunlun Elder",
 
   "tutien.realm.luyen_khi": "Qi Condensation",
   "tutien.realm.truc_co": "Foundation Establishment",
@@ -248,6 +256,8 @@
   "tutien.message.degrade_mid_success": "§a[Exchange] Successfully split 1 Mid Grade Spirit Stone!",
   "tutien.message.degrade_mid_fail": "§c[Exchange] You do not have Mid Grade Spirit Stones!",
   "tutien.message.convert_optimize_success": "§a[Exchange] Packed and optimized all spirit stones in your inventory!",
+  "tutien.message.absorbed_spirit_stone": "§a[Cultivation] Absorbed %s x %s! Gained: §e+%s Cultivation Points §aand restored §b+%s Spiritual Qi!",
+  "tooltip.tutien.spirit_stone_use_hint": "§aRight-click to absorb for cultivation (Shift to quick consume)",
 
   "tutien.trade.too_far": "§c[Trade] You are too far from the merchant!",
   "tutien.trade.insufficient_realm": "§c[Trade] Your cultivation realm is too low for this item!",
@@ -265,6 +275,14 @@
   "tutien.structure.file_not_found": "§c[Road to Immortality] Structure file not found: structures/%s",
   "tutien.structure.spawning": "§e[Road to Immortality] Generating structure %s... Please wait.",
   "tutien.structure.success": "§a§l[Road to Immortality] Successfully created %s! Generated %s blocks and initialized governing elders!",
+  "tutien.structure.not_spawned_yet": "§e[Road to Immortality] Structure '%s' has not been spawned in this world yet!",
+  "tutien.structure.spawn_now_button": "Click here to spawn it at your current location",
+  "tutien.structure.spawn_now_hover": "Instantly spawn this structure at your coordinates",
+  "tutien.structure.locate_found": "§a[Road to Immortality] Located nearest structure %s at: §e[%s, %s, %s] §7(Distance: %s blocks).",
+  "tutien.structure.teleport_button": "[Teleport There]",
+  "tutien.structure.teleport_hover": "Click to instantly teleport to structure",
+  "tutien.npc.invalid_role": "§c[Road to Immortality] Invalid NPC role: %s! Available: danduoc, danphuong, phapbao, banve, congphap, nhiemvu, thuongvan, conluan.",
+  "tutien.npc.spawned_success": "§a[Road to Immortality] Successfully spawned NPC %s at [%s, %s, %s]!",
 
   "container.tutien.alchemy_cauldron_tier": "Alchemy Cauldron - Tier %s",
   "container.tutien.refining_forge_tier": "Refining Forge - %s",

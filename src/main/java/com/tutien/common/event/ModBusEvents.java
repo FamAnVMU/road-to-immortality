@@ -11,6 +11,15 @@ import net.neoforged.neoforge.event.entity.EntityAttributeCreationEvent;
 public class ModBusEvents {
     @SubscribeEvent
     public static void registerAttributes(EntityAttributeCreationEvent event) {
-        event.put(ModEntities.TUTIEN_NPC.get(), TuTienNpcEntity.createAttributes().build());
+        var attrs = TuTienNpcEntity.createAttributes().build();
+        event.put(ModEntities.TUTIEN_NPC.get(), attrs);
+        event.put(ModEntities.NPC_DAN_DUOC.get(), attrs);
+        event.put(ModEntities.NPC_DAN_PHUONG.get(), attrs);
+        event.put(ModEntities.NPC_PHAP_BAO.get(), attrs);
+        event.put(ModEntities.NPC_BAN_VE.get(), attrs);
+        event.put(ModEntities.NPC_CONG_PHAP.get(), attrs);
+        event.put(ModEntities.NPC_NHIEM_VU.get(), attrs);
+        event.put(ModEntities.NPC_THUONG_VAN.get(), attrs);
+        event.put(ModEntities.NPC_CON_LUAN.get(), attrs);
     }
 }

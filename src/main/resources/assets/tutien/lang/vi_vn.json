@@ -109,6 +109,14 @@
   "item.tutien.chu_tien_tran_do": "Tru Tiên Trận Đồ (Thiên Cấp)",
 
   "entity.tutien.tutien_npc": "Tiên Nhân / Tu Sĩ",
+  "entity.tutien.npc_dan_duoc": "Chưởng Quầy Đan Dược",
+  "entity.tutien.npc_dan_phuong": "Đan Sư Tông Sư",
+  "entity.tutien.npc_phap_bao": "Thần Binh Các Chủ",
+  "entity.tutien.npc_ban_ve": "Luyện Khí Đại Sư",
+  "entity.tutien.npc_cong_phap": "Tàng Kinh Các Trưởng Lão",
+  "entity.tutien.npc_nhiem_vu": "Chấp Sự Thị Trấn",
+  "entity.tutien.npc_thuong_van": "Thương Vân Trưởng Lão",
+  "entity.tutien.npc_con_luan": "Côn Luân Thái Thượng",
 
   "tutien.realm.luyen_khi": "Luyện Khí",
   "tutien.realm.truc_co": "Trúc Cơ",
@@ -248,6 +256,8 @@
   "tutien.message.degrade_mid_success": "§a[Quy Đổi] Thành công phân rã 1 Trung Phẩm Linh Thạch!",
   "tutien.message.degrade_mid_fail": "§c[Quy Đổi] Bạn không có Trung Phẩm Linh Thạch!",
   "tutien.message.convert_optimize_success": "§a[Quy Đổi] Đã nén và tối ưu hóa toàn bộ linh thạch trong túi đồ!",
+  "tutien.message.absorbed_spirit_stone": "§a[Tu Tiên] Đã hấp thu %s x %s! Nhận được: §e+%s Tu Vi §avà hồi phục §b+%s Linh Khí!",
+  "tooltip.tutien.spirit_stone_use_hint": "§aNhấp chuột phải để hấp thu tu luyện (Shift để dùng nhanh)",
 
   "tutien.trade.too_far": "§c[Giao Dịch] Bạn ở quá xa NPC!",
   "tutien.trade.insufficient_realm": "§c[Giao Dịch] Cảnh giới của bạn chưa đủ để mua vật phẩm này!",
@@ -265,6 +275,14 @@
   "tutien.structure.file_not_found": "§c[Tu Tiên] Không tìm thấy file: structures/%s",
   "tutien.structure.spawning": "§e[Tu Tiên] Đang kiến thiết công trình %s... Xin đợi trong giây lát.",
   "tutien.structure.success": "§a§l[Tu Tiên] Khởi tạo thành công %s! Đã kiến tạo %s khối và thiết lập các NPC chưởng quản!",
+  "tutien.structure.not_spawned_yet": "§e[Tu Tiên] Chưa tìm thấy công trình '%s' nào được khởi tạo trong thế giới này!",
+  "tutien.structure.spawn_now_button": "Nhấp vào đây để kiến thiết ngay tại vị trí này",
+  "tutien.structure.spawn_now_hover": "Khởi tạo công trình ngay lập tức tại tọa độ của bạn",
+  "tutien.structure.locate_found": "§a[Tu Tiên] Đã định vị công trình %s gần nhất tại tọa độ: §e[%s, %s, %s] §7(Khoảng cách: %s ô).",
+  "tutien.structure.teleport_button": "[Dịch Chuyển Đến Đó]",
+  "tutien.structure.teleport_hover": "Nhấp để dịch chuyển tức thời tới công trình",
+  "tutien.npc.invalid_role": "§c[Tu Tiên] Chức năng NPC không hợp lệ: %s! Danh sách: danduoc, danphuong, phapbao, banve, congphap, nhiemvu, thuongvan, conluan.",
+  "tutien.npc.spawned_success": "§a[Tu Tiên] Đã triệu hồi thành công NPC %s tại [%s, %s, %s]!",
 
   "container.tutien.alchemy_cauldron_tier": "Lò Luyện Đan - Cấp %s",
   "container.tutien.refining_forge_tier": "Lò Luyện Khí - %s",

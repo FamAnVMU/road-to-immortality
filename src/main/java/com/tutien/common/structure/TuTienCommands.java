@@ -13,7 +13,10 @@ import net.minecraft.commands.Commands;
 import net.minecraft.commands.arguments.coordinates.BlockPosArgument;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import com.mojang.brigadier.tree.CommandNode;
+import com.tutien.common.npc.TuTienNpcRole;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.RegisterCommandsEvent;
@@ -48,6 +51,70 @@ public class TuTienCommands {
                                                     String name = StringArgumentType.getString(ctx, "name");
                                                     BlockPos pos = BlockPosArgument.getLoadedBlockPos(ctx, "pos");
                                                     StructureSpawner.spawnStructure(player.serverLevel(), name, pos, player);
+                                                    return 1;
+                                                })
+                                        )
+                                )
+                        )
+                        .then(Commands.literal("locate")
+                                .then(Commands.argument("name", StringArgumentType.word())
+                                        .suggests((ctx, builder) -> {
+                                            builder.suggest("thitran");
+                                            builder.suggest("thuongvan");
+                                            builder.suggest("conluan");
+                                            return builder.buildFuture();
+                                        })
+                                        .executes(ctx -> {
+                                            ServerPlayer player = ctx.getSource().getPlayerOrException();
+                                            String name = StringArgumentType.getString(ctx, "name");
+                                            StructureSpawner.locateStructure(player.serverLevel(), name, player.blockPosition(), player);
+                                            return 1;
+                                        })
+                                )
+                        )
+                )
+                .then(Commands.literal("locate")
+                        .then(Commands.argument("name", StringArgumentType.word())
+                                .suggests((ctx, builder) -> {
+                                    builder.suggest("thitran");
+                                    builder.suggest("thuongvan");
+                                    builder.suggest("conluan");
+                                    return builder.buildFuture();
+                                })
+                                .executes(ctx -> {
+                                    ServerPlayer player = ctx.getSource().getPlayerOrException();
+                                    String name = StringArgumentType.getString(ctx, "name");
+                                    StructureSpawner.locateStructure(player.serverLevel(), name, player.blockPosition(), player);
+                                    return 1;
+                                })
+                        )
+                )
+                .then(Commands.literal("npc")
+                        .then(Commands.literal("spawn")
+                                .then(Commands.argument("role", StringArgumentType.word())
+                                        .suggests((ctx, builder) -> {
+                                            builder.suggest("danduoc");
+                                            builder.suggest("danphuong");
+                                            builder.suggest("phapbao");
+                                            builder.suggest("banve");
+                                            builder.suggest("congphap");
+                                            builder.suggest("nhiemvu");
+                                            builder.suggest("thuongvan");
+                                            builder.suggest("conluan");
+                                            return builder.buildFuture();
+                                        })
+                                        .executes(ctx -> {
+                                            ServerPlayer player = ctx.getSource().getPlayerOrException();
+                                            String roleStr = StringArgumentType.getString(ctx, "role");
+                                            spawnNpcByRole(player.serverLevel(), roleStr, player.blockPosition(), player);
+                                            return 1;
+                                        })
+                                        .then(Commands.argument("pos", BlockPosArgument.blockPos())
+                                                .executes(ctx -> {
+                                                    ServerPlayer player = ctx.getSource().getPlayerOrException();
+                                                    String roleStr = StringArgumentType.getString(ctx, "role");
+                                                    BlockPos pos = BlockPosArgument.getLoadedBlockPos(ctx, "pos");
+                                                    spawnNpcByRole(player.serverLevel(), roleStr, pos, player);
                                                     return 1;
                                                 })
                                         )
@@ -121,5 +188,65 @@ public class TuTienCommands {
                         )
                 )
         );
+
+        // Hook directly into /locate so /locate thitran, /locate thuongvan, /locate conluan, and /locate tutien work
+        CommandNode<CommandSourceStack> locateNode = dispatcher.getRoot().getChild("locate");
+        if (locateNode != null) {
+            locateNode.addChild(Commands.literal("thitran")
+                    .executes(ctx -> {
+                        ServerPlayer player = ctx.getSource().getPlayerOrException();
+                        StructureSpawner.locateStructure(player.serverLevel(), "thitran", player.blockPosition(), player);
+                        return 1;
+                    }).build());
+            locateNode.addChild(Commands.literal("thuongvan")
+                    .executes(ctx -> {
+                        ServerPlayer player = ctx.getSource().getPlayerOrException();
+                        StructureSpawner.locateStructure(player.serverLevel(), "thuongvan", player.blockPosition(), player);
+                        return 1;
+                    }).build());
+            locateNode.addChild(Commands.literal("conluan")
+                    .executes(ctx -> {
+                        ServerPlayer player = ctx.getSource().getPlayerOrException();
+                        StructureSpawner.locateStructure(player.serverLevel(), "conluan", player.blockPosition(), player);
+                        return 1;
+                    }).build());
+            locateNode.addChild(Commands.literal("tutien")
+                    .then(Commands.argument("name", StringArgumentType.word())
+                            .suggests((ctx, builder) -> {
+                                builder.suggest("thitran");
+                                builder.suggest("thuongvan");
+                                builder.suggest("conluan");
+                                return builder.buildFuture();
+                            })
+                            .executes(ctx -> {
+                                ServerPlayer player = ctx.getSource().getPlayerOrException();
+                                String name = StringArgumentType.getString(ctx, "name");
+                                StructureSpawner.locateStructure(player.serverLevel(), name, player.blockPosition(), player);
+                                return 1;
+                            })
+                    ).build());
+        }
+    }
+
+    private static void spawnNpcByRole(ServerLevel level, String roleStr, BlockPos pos, ServerPlayer player) {
+        TuTienNpcRole role = switch (roleStr.toLowerCase()) {
+            case "danduoc", "dan_duoc" -> TuTienNpcRole.DAN_DUOC;
+            case "danphuong", "dan_phuong" -> TuTienNpcRole.DAN_PHUONG;
+            case "phapbao", "phap_bao" -> TuTienNpcRole.PHAP_BAO;
+            case "banve", "ban_ve" -> TuTienNpcRole.BAN_VE;
+            case "congphap", "cong_phap" -> TuTienNpcRole.CONG_PHAP;
+            case "nhiemvu", "nhiem_vu" -> TuTienNpcRole.NHIEM_VU_THI_TRAN;
+            case "thuongvan", "thuong_van" -> TuTienNpcRole.TONG_MON_THUONG_VAN;
+            case "conluan", "con_luan" -> TuTienNpcRole.TONG_MON_CON_LUAN;
+            default -> null;
+        };
+
+        if (role == null) {
+            player.sendSystemMessage(Component.translatable("tutien.npc.invalid_role", roleStr));
+            return;
+        }
+
+        StructureSpawner.spawnNpc(level, pos, role);
+        player.sendSystemMessage(Component.translatable("tutien.npc.spawned_success", role.getTitleComponent(), pos.getX(), pos.getY(), pos.getZ()));
     }
 }

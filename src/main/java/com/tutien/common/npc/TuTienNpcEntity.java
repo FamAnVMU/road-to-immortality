@@ -28,9 +28,24 @@ public class TuTienNpcEntity extends PathfinderMob implements MenuProvider {
     private static final EntityDataAccessor<Integer> ROLE_ID =
             SynchedEntityData.defineId(TuTienNpcEntity.class, EntityDataSerializers.INT);
 
-    public TuTienNpcEntity(EntityType<? extends PathfinderMob> entityType, Level level) {
+    public TuTienNpcEntity(EntityType<? extends TuTienNpcEntity> entityType, Level level, TuTienNpcRole defaultRole) {
         super(entityType, level);
         this.setCustomNameVisible(true);
+        if (!level.isClientSide()) {
+            this.setNpcRole(defaultRole);
+        }
+    }
+
+    public TuTienNpcEntity(EntityType<? extends TuTienNpcEntity> entityType, Level level) {
+        this(entityType, level, TuTienNpcRole.DAN_DUOC);
+    }
+
+    @Override
+    public void onSyncedDataUpdated(EntityDataAccessor<?> key) {
+        super.onSyncedDataUpdated(key);
+        if (ROLE_ID.equals(key)) {
+            this.setCustomName(Component.literal("§6").append(getNpcRole().getTitleComponent()));
+        }
     }
 
     public static AttributeSupplier.Builder createAttributes() {
@@ -102,8 +117,20 @@ public class TuTienNpcEntity extends PathfinderMob implements MenuProvider {
     @Override
     public void readAdditionalSaveData(CompoundTag compound) {
         super.readAdditionalSaveData(compound);
+        if (compound.contains("Role")) {
+            String roleStr = compound.getString("Role");
+            for (TuTienNpcRole r : TuTienNpcRole.values()) {
+                if (r.name().equalsIgnoreCase(roleStr)) {
+                    setNpcRole(r);
+                    return;
+                }
+            }
+        }
         if (compound.contains("RoleId")) {
-            setNpcRole(TuTienNpcRole.values()[compound.getInt("RoleId")]);
+            int id = compound.getInt("RoleId");
+            if (id >= 0 && id < TuTienNpcRole.values().length) {
+                setNpcRole(TuTienNpcRole.values()[id]);
+            }
         }
     }
 }

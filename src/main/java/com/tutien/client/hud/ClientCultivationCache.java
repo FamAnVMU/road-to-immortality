@@ -7,8 +7,8 @@ public class ClientCultivationCache {
     public static int layer = 1;
     public static double tuVi = 0.0;
     public static double foundation = 1.0;
-    public static float lingQi = 100.0f;
-    public static float maxLingQi = 100.0f;
+    public static float lingQi = 200.0f;
+    public static float maxLingQi = 200.0f;
     public static boolean isMeditating = false;
     public static double speedMultiplier = 1.0;
     public static long congHuan = 0;
@@ -22,6 +22,7 @@ public class ClientCultivationCache {
         tuVi = tag.getDouble("TuVi");
         foundation = tag.contains("Foundation") ? tag.getDouble("Foundation") : 1.0;
         lingQi = tag.getFloat("LingQi");
+        maxLingQi = tag.contains("MaxLingQi") ? tag.getFloat("MaxLingQi") : 200.0f;
         isMeditating = tag.getBoolean("Meditating");
         congHuan = tag.getLong("CongHuan");
         congHien = tag.getLong("CongHien");

@@ -29,7 +29,7 @@ public class PlayerCultivationData implements INBTSerializable<CompoundTag> {
     private int highestRealm = 0;
     private int highestLayer = 1;
 
-    private float lingQi = 100.0f;
+    private float lingQi = 200.0f;
     private boolean isMeditating = false;
 
     // Pill Buffs
@@ -379,6 +379,7 @@ public class PlayerCultivationData implements INBTSerializable<CompoundTag> {
         tag.putInt("HighestRealm", highestRealm);
         tag.putInt("HighestLayer", highestLayer);
         tag.putFloat("LingQi", lingQi);
+        tag.putFloat("MaxLingQi", getMaxLingQi());
         tag.putBoolean("Meditating", isMeditating);
 
         tag.putInt("PillTicks", pillBuffTicks);
