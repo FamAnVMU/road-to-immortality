@@ -84,4 +84,24 @@ public class StructureTracker extends SavedData {
         }
         return nearest;
     }
+
+    public boolean hasAnyStructureNearby(BlockPos pos, double minDistance) {
+        double minDstSqr = minDistance * minDistance;
+        for (List<BlockPos> list : structureLocations.values()) {
+            for (BlockPos p : list) {
+                if (p.distSqr(pos) < minDstSqr) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public int getTotalStructureCount() {
+        int count = 0;
+        for (List<BlockPos> list : structureLocations.values()) {
+            count += list.size();
+        }
+        return count;
+    }
 }

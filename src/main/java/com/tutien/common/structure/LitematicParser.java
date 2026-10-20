@@ -87,6 +87,27 @@ public class LitematicParser {
                 int startY = sizeY < 0 ? regPosY + sizeY + 1 : regPosY;
                 int startZ = sizeZ < 0 ? regPosZ + sizeZ + 1 : regPosZ;
 
+                // Ensure origin Y does not cause the structure to exceed world height limits
+                int maxBuildHeight = level.getMaxBuildHeight();
+                int minBuildHeight = level.getMinBuildHeight();
+                int adjustedOriginY = origin.getY();
+                if (adjustedOriginY + startY + absY >= maxBuildHeight) {
+                    adjustedOriginY = Math.max(minBuildHeight + 10, maxBuildHeight - (startY + absY) - 2);
+                }
+                BlockPos effectiveOrigin = new BlockPos(origin.getX(), adjustedOriginY, origin.getZ());
+
+                // Pre-load and ticket all chunks in bounding box to prevent corners from dropping
+                int minChunkX = (effectiveOrigin.getX() + startX) >> 4;
+                int maxChunkX = (effectiveOrigin.getX() + startX + absX) >> 4;
+                int minChunkZ = (effectiveOrigin.getZ() + startZ) >> 4;
+                int maxChunkZ = (effectiveOrigin.getZ() + startZ + absZ) >> 4;
+
+                for (int cx = minChunkX; cx <= maxChunkX; cx++) {
+                    for (int cz = minChunkZ; cz <= maxChunkZ; cz++) {
+                        level.getChunk(cx, cz, net.minecraft.world.level.chunk.status.ChunkStatus.FULL, true);
+                    }
+                }
+
                 int totalVolume = absX * absY * absZ;
 
                 for (int index = 0; index < totalVolume; index++) {
@@ -114,9 +135,30 @@ public class LitematicParser {
                             int rz = rem / absX;
                             int rx = rem % absX;
 
-                            BlockPos worldPos = origin.offset(startX + rx, startY + ry, startZ + rz);
-                            level.setBlock(worldPos, stateToPlace, 2);
-                            placedCount++;
+                            BlockPos worldPos = effectiveOrigin.offset(startX + rx, startY + ry, startZ + rz);
+                            if (worldPos.getY() >= minBuildHeight && worldPos.getY() < maxBuildHeight) {
+                                level.setBlock(worldPos, stateToPlace, Block.UPDATE_CLIENTS | Block.UPDATE_KNOWN_SHAPE);
+                                placedCount++;
+                            }
+                        }
+                    }
+                }
+
+                // Restore TileEntities if present
+                if (region.contains("TileEntities", Tag.TAG_LIST)) {
+                    ListTag tileEntities = region.getList("TileEntities", Tag.TAG_COMPOUND);
+                    for (int i = 0; i < tileEntities.size(); i++) {
+                        CompoundTag teTag = tileEntities.getCompound(i);
+                        int tex = teTag.getInt("x");
+                        int tey = teTag.getInt("y");
+                        int tez = teTag.getInt("z");
+                        BlockPos teWorldPos = effectiveOrigin.offset(startX + tex, startY + tey, startZ + tez);
+                        net.minecraft.world.level.block.entity.BlockEntity be = level.getBlockEntity(teWorldPos);
+                        if (be != null) {
+                            teTag.putInt("x", teWorldPos.getX());
+                            teTag.putInt("y", teWorldPos.getY());
+                            teTag.putInt("z", teWorldPos.getZ());
+                            be.loadWithComponents(teTag, level.registryAccess());
                         }
                     }
                 }

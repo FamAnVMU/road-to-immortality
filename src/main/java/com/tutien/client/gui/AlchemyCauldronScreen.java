@@ -67,7 +67,9 @@ public class AlchemyCauldronScreen extends AbstractContainerScreen<AlchemyCauldr
     protected void renderLabels(GuiGraphics graphics, int mouseX, int mouseY) {
         graphics.drawString(this.font, Component.translatable("container.tutien.alchemy_cauldron_tier", menu.getTier()), 8, 6, 0xFFFFFF, false);
         if (menu.isFixed()) {
-            graphics.drawString(this.font, Component.translatable("gui.tutien.fixed_facility"), 120, 6, 0xAAAAAA, false);
+            Component fixedComp = Component.translatable("gui.tutien.fixed_facility");
+            int fixedW = this.font.width(fixedComp);
+            graphics.drawString(this.font, fixedComp, this.imageWidth - 8 - fixedW, 6, 0xAAAAAA, false);
         }
         graphics.drawString(this.font, Component.translatable("container.inventory"), 8, 72, 0x888888, false);
     }

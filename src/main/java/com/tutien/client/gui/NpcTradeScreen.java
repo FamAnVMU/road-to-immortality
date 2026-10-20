@@ -17,7 +17,7 @@ import java.util.List;
 public class NpcTradeScreen extends AbstractContainerScreen<NpcTradeMenu> {
     public NpcTradeScreen(NpcTradeMenu menu, Inventory playerInventory, Component title) {
         super(menu, playerInventory, title);
-        this.imageWidth = 240;
+        this.imageWidth = 276;
         this.imageHeight = 220;
     }
 
@@ -35,7 +35,7 @@ public class NpcTradeScreen extends AbstractContainerScreen<NpcTradeMenu> {
             addRenderableWidget(Button.builder(
                     Component.translatable("gui.tutien.trade.buy"),
                     btn -> PacketDistributor.sendToServer(new C2SNpcTradePayload(menu.getNpcEntityId(), index))
-            ).bounds(left + 185, top + 26 + i * 22, 42, 16).build());
+            ).bounds(left + 224, top + 26 + i * 22, 42, 16).build());
         }
     }
 
@@ -53,8 +53,8 @@ public class NpcTradeScreen extends AbstractContainerScreen<NpcTradeMenu> {
 
         for (int i = 0; i < maxOffers; i++) {
             int rowY = top + 24 + i * 22;
-            graphics.fill(left + 10, rowY, left + 230, rowY + 20, 0xFF242436);
-            graphics.fill(left + 11, rowY + 1, left + 229, rowY + 19, 0xFF181824);
+            graphics.fill(left + 10, rowY, left + 266, rowY + 20, 0xFF242436);
+            graphics.fill(left + 11, rowY + 1, left + 265, rowY + 19, 0xFF181824);
 
             NpcTradeOffer offer = offers.get(i);
             ItemStack item = offer.getOutput();
@@ -65,7 +65,7 @@ public class NpcTradeScreen extends AbstractContainerScreen<NpcTradeMenu> {
 
             // Item Name & Cost Text
             String name = item.getHoverName().getString();
-            if (name.length() > 14) name = name.substring(0, 14) + "...";
+            if (name.length() > 22) name = name.substring(0, 22) + "...";
             graphics.drawString(this.font, name, left + 35, rowY + 3, 0xFFFFFF, false);
 
             String costStr = "";
@@ -80,13 +80,14 @@ public class NpcTradeScreen extends AbstractContainerScreen<NpcTradeMenu> {
         }
 
         // Inventory slots background
+        int invLeft = left + (this.imageWidth - 162) / 2;
         for (int r = 0; r < 3; r++) {
             for (int c = 0; c < 9; c++) {
-                drawSlot(graphics, left + 38 + c * 18, top + 119 + r * 18);
+                drawSlot(graphics, invLeft + c * 18, top + 119 + r * 18);
             }
         }
         for (int c = 0; c < 9; c++) {
-            drawSlot(graphics, left + 38 + c * 18, top + 177);
+            drawSlot(graphics, invLeft + c * 18, top + 177);
         }
     }
 
@@ -98,7 +99,8 @@ public class NpcTradeScreen extends AbstractContainerScreen<NpcTradeMenu> {
     @Override
     protected void renderLabels(GuiGraphics graphics, int mouseX, int mouseY) {
         graphics.drawString(this.font, Component.literal("§6✦ ").append(menu.getRole().getTitleComponent()).append(" ✦"), 10, 8, 0xFFFFFF, false);
-        graphics.drawString(this.font, Component.translatable("container.inventory"), 38, 108, 0x888888, false);
+        int invLeft = (this.imageWidth - 162) / 2;
+        graphics.drawString(this.font, Component.translatable("container.inventory"), invLeft, 108, 0x888888, false);
     }
 
     @Override

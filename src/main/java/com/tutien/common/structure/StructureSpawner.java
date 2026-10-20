@@ -34,11 +34,11 @@ public class StructureSpawner {
         };
 
         if (resourceName.isEmpty()) {
-            player.sendSystemMessage(Component.translatable("tutien.structure.invalid_name"));
+            if (player != null) player.sendSystemMessage(Component.translatable("tutien.structure.invalid_name"));
             return false;
         }
 
-        player.sendSystemMessage(Component.translatable("tutien.structure.spawning", structureName));
+        if (player != null) player.sendSystemMessage(Component.translatable("tutien.structure.spawning", structureName));
 
         int placed = 0;
         // 1. First attempt: Load directly from bundled mod resources inside the JAR
@@ -63,7 +63,7 @@ public class StructureSpawner {
             if (file.exists()) {
                 placed = LitematicParser.placeLitematic(level, file, pos);
             } else {
-                player.sendSystemMessage(Component.translatable("tutien.structure.file_not_found", resourceName));
+                if (player != null) player.sendSystemMessage(Component.translatable("tutien.structure.file_not_found", resourceName));
                 return false;
             }
         }
@@ -71,11 +71,20 @@ public class StructureSpawner {
         // Populate Facilities and NPCs
         populateStructureFacilities(level, structureName.toLowerCase(), pos);
 
+        // Generate Thematic Loot Chests
+        StructureLootGenerator.generateStructureLoot(level, structureName.toLowerCase(), pos);
+
         // Record structure in world data
         StructureTracker.get(level).recordStructure(structureName.toLowerCase(), pos);
 
-        player.sendSystemMessage(Component.translatable("tutien.structure.success", structureName, placed));
+        if (player != null) {
+            player.sendSystemMessage(Component.translatable("tutien.structure.success", structureName, placed));
+        }
         return true;
+    }
+
+    public static boolean spawnStructure(ServerLevel level, String structureName, BlockPos pos) {
+        return spawnStructure(level, structureName, pos, null);
     }
 
     public static boolean locateStructure(ServerLevel level, String structureName, BlockPos currentPos, ServerPlayer player) {
@@ -118,32 +127,36 @@ public class StructureSpawner {
     private static void populateStructureFacilities(ServerLevel level, String structureName, BlockPos pos) {
         switch (structureName) {
             case "thitran", "thi_tran" -> {
-                // Town: Spawn 6 NPCs
-                spawnNpc(level, pos.offset(2, 1, 2), TuTienNpcRole.DAN_DUOC);
-                spawnNpc(level, pos.offset(5, 1, 2), TuTienNpcRole.DAN_PHUONG);
-                spawnNpc(level, pos.offset(8, 1, 2), TuTienNpcRole.PHAP_BAO);
-                spawnNpc(level, pos.offset(11, 1, 2), TuTienNpcRole.BAN_VE);
-                spawnNpc(level, pos.offset(14, 1, 2), TuTienNpcRole.CONG_PHAP);
-                spawnNpc(level, pos.offset(17, 1, 2), TuTienNpcRole.NHIEM_VU_THI_TRAN);
+                // Town Square & Market (Center of town path layout is at X=42, Z=68)
+                spawnNpc(level, pos.offset(38, 2, 65), TuTienNpcRole.DAN_DUOC);
+                spawnNpc(level, pos.offset(38, 2, 68), TuTienNpcRole.DAN_PHUONG);
+                spawnNpc(level, pos.offset(46, 2, 65), TuTienNpcRole.PHAP_BAO);
+                spawnNpc(level, pos.offset(46, 2, 68), TuTienNpcRole.BAN_VE);
+                spawnNpc(level, pos.offset(42, 2, 63), TuTienNpcRole.CONG_PHAP);
+                spawnNpc(level, pos.offset(42, 2, 72), TuTienNpcRole.NHIEM_VU_THI_TRAN);
 
-                // Fixed Cauldron & Forge & Altar in Town
-                setFixedCauldron(level, pos.offset(3, 1, 5), 1);
-                setFixedForge(level, pos.offset(6, 1, 5), 1);
-                setFixedAltar(level, pos.offset(9, 1, 5), RecoveryAltarBlockEntity.AltarTier.TOWN);
+                // Fixed Cauldron & Forge & Altar in Town Square
+                setFixedCauldron(level, pos.offset(36, 2, 68), 1);
+                setFixedForge(level, pos.offset(48, 2, 68), 1);
+                setFixedAltar(level, pos.offset(42, 2, 67), RecoveryAltarBlockEntity.AltarTier.TOWN);
             }
             case "thuongvan", "thuong_van" -> {
-                // Cangyun Sect: Elder NPC, mid tier forge and altar
-                spawnNpc(level, pos.offset(3, 1, 3), TuTienNpcRole.TONG_MON_THUONG_VAN);
-                setFixedCauldron(level, pos.offset(6, 1, 6), 3);
-                setFixedForge(level, pos.offset(8, 1, 6), 2);
-                setFixedAltar(level, pos.offset(10, 1, 6), RecoveryAltarBlockEntity.AltarTier.CANGYUN);
+                // Cangyun Sect Main Terrace & Elder Pavilion (X=81, Z=57, Y=11)
+                spawnNpc(level, pos.offset(81, 11, 57), TuTienNpcRole.TONG_MON_THUONG_VAN);
+                spawnNpc(level, pos.offset(81, 11, 63), TuTienNpcRole.NHIEM_VU_THI_TRAN);
+
+                setFixedAltar(level, pos.offset(81, 11, 52), RecoveryAltarBlockEntity.AltarTier.CANGYUN);
+                setFixedCauldron(level, pos.offset(77, 11, 60), 3);
+                setFixedForge(level, pos.offset(85, 11, 60), 2);
             }
             case "conluan", "con_luan" -> {
-                // Kunlun Sacred Ground: Sacred Elder NPC, high tier forge and altar
-                spawnNpc(level, pos.offset(5, 1, 5), TuTienNpcRole.TONG_MON_CON_LUAN);
-                setFixedCauldron(level, pos.offset(10, 1, 10), 7);
-                setFixedForge(level, pos.offset(12, 1, 10), 4);
-                setFixedAltar(level, pos.offset(14, 1, 10), RecoveryAltarBlockEntity.AltarTier.KUNLUN);
+                // Kunlun Sacred Ground: High Celestial Sanctum & Altar Dais (X=29, Z=90, Y=47)
+                spawnNpc(level, pos.offset(29, 47, 92), TuTienNpcRole.TONG_MON_CON_LUAN);
+                spawnNpc(level, pos.offset(65, 4, 30), TuTienNpcRole.CONG_PHAP); // Gate Elder
+
+                setFixedAltar(level, pos.offset(29, 47, 88), RecoveryAltarBlockEntity.AltarTier.KUNLUN);
+                setFixedCauldron(level, pos.offset(25, 47, 90), 7);
+                setFixedForge(level, pos.offset(33, 47, 90), 4);
             }
         }
     }

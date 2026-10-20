@@ -24,15 +24,16 @@ public class NpcTradeMenu extends AbstractContainerMenu {
         this.role = role;
 
         // Player Inventory
+        int invLeft = 58;
         for (int row = 0; row < 3; ++row) {
             for (int col = 0; col < 9; ++col) {
-                this.addSlot(new Slot(playerInventory, col + row * 9 + 9, 8 + col * 18, 120 + row * 18));
+                this.addSlot(new Slot(playerInventory, col + row * 9 + 9, invLeft + col * 18, 120 + row * 18));
             }
         }
 
         // Player Hotbar
         for (int col = 0; col < 9; ++col) {
-            this.addSlot(new Slot(playerInventory, col, 8 + col * 18, 178));
+            this.addSlot(new Slot(playerInventory, col, invLeft + col * 18, 178));
         }
     }
 

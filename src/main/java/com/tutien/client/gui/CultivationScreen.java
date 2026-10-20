@@ -25,14 +25,14 @@ public class CultivationScreen extends Screen {
         double req = realm.calculateRequiredTuVi(ClientCultivationCache.layer);
         boolean canBreakthrough = ClientCultivationCache.tuVi >= req;
 
-        // Nút Đột phá
+        // Side-by-side bottom buttons to prevent vertical text collisions
         this.breakthroughButton = addRenderableWidget(Button.builder(
                 Component.translatable("gui.tutien.cultivation.breakthrough"),
                 btn -> {
                     PacketDistributor.sendToServer(new C2SPerformBreakthroughPayload());
                     this.onClose();
                 }
-        ).bounds(centerX - 50, centerY + 65, 100, 20).build());
+        ).bounds(centerX - 105, centerY + 68, 100, 20).build());
 
         this.breakthroughButton.active = canBreakthrough;
 
@@ -40,7 +40,7 @@ public class CultivationScreen extends Screen {
         addRenderableWidget(Button.builder(
                 Component.translatable("gui.tutien.close"),
                 btn -> this.onClose()
-        ).bounds(centerX - 35, centerY + 90, 70, 18).build());
+        ).bounds(centerX + 5, centerY + 68, 100, 20).build());
     }
 
     @Override

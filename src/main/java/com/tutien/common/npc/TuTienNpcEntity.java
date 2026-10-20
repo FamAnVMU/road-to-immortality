@@ -31,6 +31,7 @@ public class TuTienNpcEntity extends PathfinderMob implements MenuProvider {
     public TuTienNpcEntity(EntityType<? extends TuTienNpcEntity> entityType, Level level, TuTienNpcRole defaultRole) {
         super(entityType, level);
         this.setCustomNameVisible(true);
+        this.setGlowingTag(true);
         if (!level.isClientSide()) {
             this.setNpcRole(defaultRole);
         }
@@ -38,6 +39,11 @@ public class TuTienNpcEntity extends PathfinderMob implements MenuProvider {
 
     public TuTienNpcEntity(EntityType<? extends TuTienNpcEntity> entityType, Level level) {
         this(entityType, level, TuTienNpcRole.DAN_DUOC);
+    }
+
+    @Override
+    public boolean isCurrentlyGlowing() {
+        return true;
     }
 
     @Override
