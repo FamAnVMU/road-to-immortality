@@ -1,0 +1,27 @@
+{
+  "type": "tutien:refining",
+  "blueprint": {
+    "item": "tutien:ban_ve_kiem"
+  },
+  "materials": [
+    {
+      "item": "minecraft:netherite_ingot"
+    },
+    {
+      "item": "minecraft:iron_block"
+    },
+    {
+      "item": "tutien:huyen_bang_thao"
+    }
+  ],
+  "catalyst": {
+    "item": "tutien:trung_pham_linh_thach"
+  },
+  "result": {
+    "id": "tutien:huyen_thiet_kiem",
+    "count": 1
+  },
+  "requiredForgeTier": 2,
+  "requiredRefiningLevel": 2,
+  "craftingTime": 140
+}

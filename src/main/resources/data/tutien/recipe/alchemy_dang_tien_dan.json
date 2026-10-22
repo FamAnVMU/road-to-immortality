@@ -1,0 +1,24 @@
+{
+  "type": "tutien:alchemy",
+  "ingredients": [
+    {
+      "item": "tutien:nguyen_than_thao"
+    },
+    {
+      "item": "minecraft:nether_star"
+    },
+    {
+      "item": "minecraft:totem_of_undying"
+    }
+  ],
+  "catalyst": {
+    "item": "tutien:than_pham_linh_thach"
+  },
+  "result": {
+    "id": "tutien:dang_tien_dan",
+    "count": 1
+  },
+  "requiredCauldronTier": 4,
+  "requiredAlchemyLevel": 9,
+  "craftingTime": 240
+}

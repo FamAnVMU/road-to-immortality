@@ -1,0 +1,21 @@
+{
+  "type": "tutien:alchemy",
+  "ingredients": [
+    {
+      "item": "tutien:ngu_hanh_chi"
+    },
+    {
+      "item": "minecraft:ender_pearl"
+    }
+  ],
+  "catalyst": {
+    "item": "tutien:thuong_pham_linh_thach"
+  },
+  "result": {
+    "id": "tutien:toc_do_dan_7",
+    "count": 2
+  },
+  "requiredCauldronTier": 3,
+  "requiredAlchemyLevel": 7,
+  "craftingTime": 140
+}

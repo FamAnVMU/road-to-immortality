@@ -1,0 +1,27 @@
+{
+  "type": "tutien:refining",
+  "blueprint": {
+    "item": "tutien:ban_ve_phap_khi"
+  },
+  "materials": [
+    {
+      "item": "tutien:tran_phap_core"
+    },
+    {
+      "item": "tutien:thanh_phong_kiem"
+    },
+    {
+      "item": "minecraft:nether_star"
+    }
+  ],
+  "catalyst": {
+    "item": "tutien:than_pham_linh_thach"
+  },
+  "result": {
+    "id": "tutien:chu_tien_tran_do",
+    "count": 1
+  },
+  "requiredForgeTier": 4,
+  "requiredRefiningLevel": 4,
+  "craftingTime": 200
+}

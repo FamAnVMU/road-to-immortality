@@ -1,0 +1,24 @@
+{
+  "type": "tutien:refining",
+  "blueprint": {
+    "item": "tutien:ban_ve_dao_bao"
+  },
+  "materials": [
+    {
+      "item": "minecraft:leather_helmet"
+    },
+    {
+      "item": "minecraft:gold_ingot"
+    }
+  ],
+  "catalyst": {
+    "item": "tutien:ha_pham_linh_thach"
+  },
+  "result": {
+    "id": "tutien:hoang_dao_bao_mu",
+    "count": 1
+  },
+  "requiredForgeTier": 1,
+  "requiredRefiningLevel": 1,
+  "craftingTime": 100
+}

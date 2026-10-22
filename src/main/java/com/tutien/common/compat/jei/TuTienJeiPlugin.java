@@ -1,15 +1,23 @@
 package com.tutien.common.compat.jei;
 
 import com.tutien.TuTienMod;
+import com.tutien.client.gui.AlchemyCauldronScreen;
+import com.tutien.client.gui.RefiningForgeScreen;
+import com.tutien.common.alchemy.AlchemyCauldronMenu;
 import com.tutien.common.alchemy.AlchemyRecipe;
+import com.tutien.common.refining.RefiningForgeMenu;
 import com.tutien.common.refining.RefiningRecipe;
 import com.tutien.common.registry.ModBlocks;
+import com.tutien.common.registry.ModMenuTypes;
 import com.tutien.common.registry.ModRecipeTypes;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.recipe.RecipeType;
+import mezz.jei.api.registration.IGuiHandlerRegistration;
 import mezz.jei.api.registration.IRecipeCatalystRegistration;
+import mezz.jei.api.registration.IRecipeCategoryRegistration;
 import mezz.jei.api.registration.IRecipeRegistration;
+import mezz.jei.api.registration.IRecipeTransferRegistration;
 import net.minecraft.client.Minecraft;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
@@ -34,6 +42,14 @@ public class TuTienJeiPlugin implements IModPlugin {
     }
 
     @Override
+    public void registerCategories(IRecipeCategoryRegistration registration) {
+        registration.addRecipeCategories(
+                new AlchemyRecipeCategory(registration.getJeiHelpers().getGuiHelper()),
+                new RefiningRecipeCategory(registration.getJeiHelpers().getGuiHelper())
+        );
+    }
+
+    @Override
     public void registerRecipeCatalysts(IRecipeCatalystRegistration registration) {
         registration.addRecipeCatalyst(new ItemStack(ModBlocks.LO_LUYEN_DAN.get()), ALCHEMY_JEI_TYPE);
         registration.addRecipeCatalyst(new ItemStack(ModBlocks.LO_LUYEN_KHI.get()), REFINING_JEI_TYPE);
@@ -53,5 +69,27 @@ public class TuTienJeiPlugin implements IModPlugin {
                     .stream().map(RecipeHolder::value).toList();
             registration.addRecipes(REFINING_JEI_TYPE, refiningRecipes);
         }
+    }
+
+    @Override
+    public void registerGuiHandlers(IGuiHandlerRegistration registration) {
+        registration.addRecipeClickArea(AlchemyCauldronScreen.class, 95, 38, 24, 16, ALCHEMY_JEI_TYPE);
+        registration.addRecipeClickArea(RefiningForgeScreen.class, 105, 38, 24, 16, REFINING_JEI_TYPE);
+    }
+
+    @Override
+    public void registerRecipeTransferHandlers(IRecipeTransferRegistration registration) {
+        registration.addRecipeTransferHandler(
+                AlchemyCauldronMenu.class,
+                ModMenuTypes.ALCHEMY_CAULDRON_MENU.get(),
+                ALCHEMY_JEI_TYPE,
+                0, 4, 5, 36
+        );
+        registration.addRecipeTransferHandler(
+                RefiningForgeMenu.class,
+                ModMenuTypes.REFINING_FORGE_MENU.get(),
+                REFINING_JEI_TYPE,
+                0, 5, 6, 36
+        );
     }
 }

@@ -1,0 +1,21 @@
+{
+  "type": "tutien:alchemy",
+  "ingredients": [
+    {
+      "item": "tutien:xich_hoa_qua"
+    },
+    {
+      "item": "tutien:ngu_hanh_chi"
+    }
+  ],
+  "catalyst": {
+    "item": "tutien:trung_pham_linh_thach"
+  },
+  "result": {
+    "id": "tutien:tu_vi_dan_5",
+    "count": 2
+  },
+  "requiredCauldronTier": 2,
+  "requiredAlchemyLevel": 5,
+  "craftingTime": 100
+}

@@ -1,0 +1,27 @@
+{
+  "type": "tutien:refining",
+  "blueprint": {
+    "item": "tutien:ban_ve_phap_khi"
+  },
+  "materials": [
+    {
+      "item": "minecraft:anvil"
+    },
+    {
+      "item": "minecraft:crying_obsidian"
+    },
+    {
+      "item": "tutien:u_hon_hoa"
+    }
+  ],
+  "catalyst": {
+    "item": "tutien:thuong_pham_linh_thach"
+  },
+  "result": {
+    "id": "tutien:phien_thien_an",
+    "count": 1
+  },
+  "requiredForgeTier": 3,
+  "requiredRefiningLevel": 3,
+  "craftingTime": 160
+}

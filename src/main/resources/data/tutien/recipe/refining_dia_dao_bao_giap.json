@@ -1,0 +1,27 @@
+{
+  "type": "tutien:refining",
+  "blueprint": {
+    "item": "tutien:ban_ve_dao_bao"
+  },
+  "materials": [
+    {
+      "item": "tutien:huyen_dao_bao_giap"
+    },
+    {
+      "item": "minecraft:netherite_ingot"
+    },
+    {
+      "item": "minecraft:obsidian"
+    }
+  ],
+  "catalyst": {
+    "item": "tutien:thuong_pham_linh_thach"
+  },
+  "result": {
+    "id": "tutien:dia_dao_bao_giap",
+    "count": 1
+  },
+  "requiredForgeTier": 3,
+  "requiredRefiningLevel": 3,
+  "craftingTime": 180
+}

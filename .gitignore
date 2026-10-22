@@ -1,6 +1,8 @@
 # Gradle
 .gradle/
-build/
+build/**
+!build/
+!build/libs/
 !build/libs/*.jar
 
 # Run & log files
@@ -21,3 +23,6 @@ logs/
 Thumbs.db
 Desktop.ini
 .DS_Store
+
+# Temporary scratch
+scratch/

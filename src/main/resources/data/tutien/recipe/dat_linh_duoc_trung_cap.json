@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "tutien:dat_linh_duoc_ha_cap"
+    },
+    {
+      "item": "tutien:trung_pham_linh_thach"
+    },
+    {
+      "item": "minecraft:amethyst_shard"
+    }
+  ],
+  "result": {
+    "id": "tutien:dat_linh_duoc_trung_cap",
+    "count": 1
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "type": "tutien:alchemy",
+  "ingredients": [
+    {
+      "item": "tutien:thanh_tam_hoa"
+    },
+    {
+      "item": "minecraft:glistering_melon_slice"
+    }
+  ],
+  "catalyst": {
+    "item": "tutien:trung_pham_linh_thach"
+  },
+  "result": {
+    "id": "tutien:hoi_huyet_dan_2",
+    "count": 2
+  },
+  "requiredCauldronTier": 2,
+  "requiredAlchemyLevel": 2,
+  "craftingTime": 80
+}

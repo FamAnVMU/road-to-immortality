@@ -1,0 +1,21 @@
+{
+  "type": "tutien:alchemy",
+  "ingredients": [
+    {
+      "item": "tutien:u_hon_hoa"
+    },
+    {
+      "item": "minecraft:ender_eye"
+    }
+  ],
+  "catalyst": {
+    "item": "tutien:thuong_pham_linh_thach"
+  },
+  "result": {
+    "id": "tutien:toc_do_dan_8",
+    "count": 2
+  },
+  "requiredCauldronTier": 3,
+  "requiredAlchemyLevel": 8,
+  "craftingTime": 160
+}

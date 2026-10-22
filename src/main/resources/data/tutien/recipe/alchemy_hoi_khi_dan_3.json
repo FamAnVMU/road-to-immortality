@@ -1,0 +1,21 @@
+{
+  "type": "tutien:alchemy",
+  "ingredients": [
+    {
+      "item": "tutien:huyen_bang_thao"
+    },
+    {
+      "item": "minecraft:diamond"
+    }
+  ],
+  "catalyst": {
+    "item": "tutien:thuong_pham_linh_thach"
+  },
+  "result": {
+    "id": "tutien:hoi_khi_dan_3",
+    "count": 2
+  },
+  "requiredCauldronTier": 3,
+  "requiredAlchemyLevel": 3,
+  "craftingTime": 100
+}

@@ -1,0 +1,24 @@
+{
+  "type": "tutien:alchemy",
+  "ingredients": [
+    {
+      "item": "tutien:linh_thao"
+    },
+    {
+      "item": "minecraft:sugar"
+    },
+    {
+      "item": "minecraft:feather"
+    }
+  ],
+  "catalyst": {
+    "item": "tutien:ha_pham_linh_thach"
+  },
+  "result": {
+    "id": "tutien:toc_do_dan_2",
+    "count": 2
+  },
+  "requiredCauldronTier": 1,
+  "requiredAlchemyLevel": 2,
+  "craftingTime": 70
+}

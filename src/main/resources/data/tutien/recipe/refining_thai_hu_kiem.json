@@ -1,0 +1,27 @@
+{
+  "type": "tutien:refining",
+  "blueprint": {
+    "item": "tutien:ban_ve_kiem"
+  },
+  "materials": [
+    {
+      "item": "minecraft:nether_star"
+    },
+    {
+      "item": "tutien:ngu_hanh_chi"
+    },
+    {
+      "item": "tutien:nguyen_than_thao"
+    }
+  ],
+  "catalyst": {
+    "item": "tutien:than_pham_linh_thach"
+  },
+  "result": {
+    "id": "tutien:thai_hu_kiem",
+    "count": 1
+  },
+  "requiredForgeTier": 4,
+  "requiredRefiningLevel": 4,
+  "craftingTime": 200
+}

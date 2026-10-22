@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "minecraft:paper"
+    },
+    {
+      "item": "minecraft:blaze_powder"
+    },
+    {
+      "item": "tutien:ha_pham_linh_thach"
+    }
+  ],
+  "result": {
+    "id": "tutien:dan_phuong_cuong_luc",
+    "count": 1
+  }
+}

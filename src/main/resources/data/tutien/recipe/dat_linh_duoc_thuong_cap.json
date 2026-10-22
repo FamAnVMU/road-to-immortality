@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "tutien:dat_linh_duoc_trung_cap"
+    },
+    {
+      "item": "tutien:thuong_pham_linh_thach"
+    },
+    {
+      "item": "minecraft:nether_wart"
+    }
+  ],
+  "result": {
+    "id": "tutien:dat_linh_duoc_thuong_cap",
+    "count": 1
+  }
+}

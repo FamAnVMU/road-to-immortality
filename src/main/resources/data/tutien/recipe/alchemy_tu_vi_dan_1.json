@@ -1,0 +1,21 @@
+{
+  "type": "tutien:alchemy",
+  "ingredients": [
+    {
+      "item": "tutien:linh_thao"
+    },
+    {
+      "item": "minecraft:sugar"
+    }
+  ],
+  "catalyst": {
+    "item": "tutien:ha_pham_linh_thach"
+  },
+  "result": {
+    "id": "tutien:tu_vi_dan_1",
+    "count": 2
+  },
+  "requiredCauldronTier": 1,
+  "requiredAlchemyLevel": 1,
+  "craftingTime": 60
+}

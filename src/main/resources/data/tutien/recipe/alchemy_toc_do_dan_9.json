@@ -1,0 +1,21 @@
+{
+  "type": "tutien:alchemy",
+  "ingredients": [
+    {
+      "item": "tutien:thien_linh_qua"
+    },
+    {
+      "item": "minecraft:nether_star"
+    }
+  ],
+  "catalyst": {
+    "item": "tutien:than_pham_linh_thach"
+  },
+  "result": {
+    "id": "tutien:toc_do_dan_9",
+    "count": 2
+  },
+  "requiredCauldronTier": 4,
+  "requiredAlchemyLevel": 9,
+  "craftingTime": 200
+}

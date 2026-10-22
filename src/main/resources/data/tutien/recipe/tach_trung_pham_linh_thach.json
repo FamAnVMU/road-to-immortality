@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "tutien:trung_pham_linh_thach"
+    }
+  ],
+  "result": {
+    "id": "tutien:ha_pham_linh_thach",
+    "count": 9
+  }
+}

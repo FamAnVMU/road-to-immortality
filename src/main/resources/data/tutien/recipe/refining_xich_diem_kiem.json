@@ -1,0 +1,27 @@
+{
+  "type": "tutien:refining",
+  "blueprint": {
+    "item": "tutien:ban_ve_kiem"
+  },
+  "materials": [
+    {
+      "item": "minecraft:blaze_rod"
+    },
+    {
+      "item": "minecraft:netherite_scrap"
+    },
+    {
+      "item": "tutien:xich_hoa_qua"
+    }
+  ],
+  "catalyst": {
+    "item": "tutien:thuong_pham_linh_thach"
+  },
+  "result": {
+    "id": "tutien:xich_diem_kiem",
+    "count": 1
+  },
+  "requiredForgeTier": 3,
+  "requiredRefiningLevel": 3,
+  "craftingTime": 160
+}

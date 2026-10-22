@@ -1,0 +1,24 @@
+{
+  "type": "tutien:alchemy",
+  "ingredients": [
+    {
+      "item": "tutien:thanh_tam_hoa"
+    },
+    {
+      "item": "tutien:huyen_bang_thao"
+    },
+    {
+      "item": "tutien:xich_hoa_qua"
+    }
+  ],
+  "catalyst": {
+    "item": "tutien:trung_pham_linh_thach"
+  },
+  "result": {
+    "id": "tutien:kim_dan_dan",
+    "count": 1
+  },
+  "requiredCauldronTier": 2,
+  "requiredAlchemyLevel": 3,
+  "craftingTime": 120
+}

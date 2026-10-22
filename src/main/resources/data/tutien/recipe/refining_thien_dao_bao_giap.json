@@ -1,0 +1,27 @@
+{
+  "type": "tutien:refining",
+  "blueprint": {
+    "item": "tutien:ban_ve_dao_bao"
+  },
+  "materials": [
+    {
+      "item": "tutien:dia_dao_bao_giap"
+    },
+    {
+      "item": "minecraft:nether_star"
+    },
+    {
+      "item": "tutien:thien_linh_qua"
+    }
+  ],
+  "catalyst": {
+    "item": "tutien:than_pham_linh_thach"
+  },
+  "result": {
+    "id": "tutien:thien_dao_bao_giap",
+    "count": 1
+  },
+  "requiredForgeTier": 4,
+  "requiredRefiningLevel": 4,
+  "craftingTime": 240
+}

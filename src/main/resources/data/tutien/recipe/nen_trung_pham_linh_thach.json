@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "HHH",
+    "HHH",
+    "HHH"
+  ],
+  "key": {
+    "H": {
+      "item": "tutien:ha_pham_linh_thach"
+    }
+  },
+  "result": {
+    "id": "tutien:trung_pham_linh_thach",
+    "count": 1
+  }
+}

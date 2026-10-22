@@ -1,0 +1,21 @@
+{
+  "type": "tutien:alchemy",
+  "ingredients": [
+    {
+      "item": "tutien:cuu_diep_thao"
+    },
+    {
+      "item": "tutien:nguyen_than_thao"
+    }
+  ],
+  "catalyst": {
+    "item": "tutien:than_pham_linh_thach"
+  },
+  "result": {
+    "id": "tutien:tu_vi_dan_9",
+    "count": 2
+  },
+  "requiredCauldronTier": 4,
+  "requiredAlchemyLevel": 9,
+  "craftingTime": 200
+}

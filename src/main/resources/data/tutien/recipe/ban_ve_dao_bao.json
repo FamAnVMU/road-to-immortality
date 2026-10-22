@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "minecraft:paper"
+    },
+    {
+      "item": "minecraft:leather_chestplate"
+    },
+    {
+      "item": "tutien:ha_pham_linh_thach"
+    }
+  ],
+  "result": {
+    "id": "tutien:ban_ve_dao_bao",
+    "count": 1
+  }
+}

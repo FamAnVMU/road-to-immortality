@@ -1,0 +1,27 @@
+{
+  "type": "tutien:refining",
+  "blueprint": {
+    "item": "tutien:ban_ve_phap_khi"
+  },
+  "materials": [
+    {
+      "item": "minecraft:iron_ingot"
+    },
+    {
+      "item": "minecraft:glass_pane"
+    },
+    {
+      "item": "minecraft:shield"
+    }
+  ],
+  "catalyst": {
+    "item": "tutien:ha_pham_linh_thach"
+  },
+  "result": {
+    "id": "tutien:ho_tam_kinh",
+    "count": 1
+  },
+  "requiredForgeTier": 1,
+  "requiredRefiningLevel": 1,
+  "craftingTime": 100
+}

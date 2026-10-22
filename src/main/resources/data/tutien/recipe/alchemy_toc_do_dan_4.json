@@ -1,0 +1,21 @@
+{
+  "type": "tutien:alchemy",
+  "ingredients": [
+    {
+      "item": "tutien:thanh_tam_hoa"
+    },
+    {
+      "item": "minecraft:phantom_membrane"
+    }
+  ],
+  "catalyst": {
+    "item": "tutien:trung_pham_linh_thach"
+  },
+  "result": {
+    "id": "tutien:toc_do_dan_4",
+    "count": 2
+  },
+  "requiredCauldronTier": 2,
+  "requiredAlchemyLevel": 4,
+  "craftingTime": 90
+}

@@ -1,0 +1,24 @@
+{
+  "type": "tutien:alchemy",
+  "ingredients": [
+    {
+      "item": "tutien:ngu_hanh_chi"
+    },
+    {
+      "item": "tutien:u_hon_hoa"
+    },
+    {
+      "item": "minecraft:nether_wart"
+    }
+  ],
+  "catalyst": {
+    "item": "tutien:thuong_pham_linh_thach"
+  },
+  "result": {
+    "id": "tutien:hoa_than_dan",
+    "count": 1
+  },
+  "requiredCauldronTier": 3,
+  "requiredAlchemyLevel": 5,
+  "craftingTime": 160
+}
