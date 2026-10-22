@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "minecraft:item/iron_chestplate"
+    "layer0": "tutien:item/thien_dao_bao_giap"
   }
 }
