@@ -97,6 +97,10 @@ public class StructureSpawner {
 
         BlockPos nearest = StructureTracker.get(level).findNearest(key, currentPos);
         if (nearest == null) {
+            nearest = StructureWorldGenHandler.findNearestCandidate(level, key, currentPos);
+        }
+
+        if (nearest == null) {
             Component spawnLink = Component.literal(" [")
                     .append(Component.translatable("tutien.structure.spawn_now_button"))
                     .append(Component.literal("]"))
@@ -110,14 +114,23 @@ public class StructureSpawner {
             return false;
         }
 
-        int dist = (int) Math.sqrt(nearest.distSqr(currentPos));
-        Component message = Component.translatable("tutien.structure.locate_found", structureName, nearest.getX(), nearest.getY(), nearest.getZ(), dist)
+        int surfaceY = nearest.getY() > 0 ? nearest.getY() : 70;
+        if (level.hasChunk(nearest.getX() >> 4, nearest.getZ() >> 4)) {
+            int calcY = level.getHeight(net.minecraft.world.level.levelgen.Heightmap.Types.WORLD_SURFACE, nearest.getX(), nearest.getZ());
+            if (calcY > level.getMinBuildHeight() + 10) {
+                surfaceY = calcY;
+            }
+        }
+        BlockPos finalPos = new BlockPos(nearest.getX(), surfaceY, nearest.getZ());
+
+        int dist = (int) Math.sqrt(finalPos.distSqr(currentPos));
+        Component message = Component.translatable("tutien.structure.locate_found", structureName, finalPos.getX(), finalPos.getY(), finalPos.getZ(), dist)
                 .append(Component.literal(" ")
                         .append(Component.translatable("tutien.structure.teleport_button")
                                 .withStyle(style -> style
                                         .withColor(net.minecraft.ChatFormatting.GREEN)
                                         .withUnderlined(true)
-                                        .withClickEvent(new net.minecraft.network.chat.ClickEvent(net.minecraft.network.chat.ClickEvent.Action.RUN_COMMAND, "/tp @s " + nearest.getX() + " " + nearest.getY() + " " + nearest.getZ()))
+                                        .withClickEvent(new net.minecraft.network.chat.ClickEvent(net.minecraft.network.chat.ClickEvent.Action.RUN_COMMAND, "/tp @s " + finalPos.getX() + " " + finalPos.getY() + " " + finalPos.getZ()))
                                         .withHoverEvent(new net.minecraft.network.chat.HoverEvent(net.minecraft.network.chat.HoverEvent.Action.SHOW_TEXT, Component.translatable("tutien.structure.teleport_hover"))))));
 
         player.sendSystemMessage(message);

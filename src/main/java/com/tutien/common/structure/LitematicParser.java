@@ -96,19 +96,11 @@ public class LitematicParser {
                 }
                 BlockPos effectiveOrigin = new BlockPos(origin.getX(), adjustedOriginY, origin.getZ());
 
-                // Pre-load and ticket all chunks in bounding box to prevent corners from dropping
-                int minChunkX = (effectiveOrigin.getX() + startX) >> 4;
-                int maxChunkX = (effectiveOrigin.getX() + startX + absX) >> 4;
-                int minChunkZ = (effectiveOrigin.getZ() + startZ) >> 4;
-                int maxChunkZ = (effectiveOrigin.getZ() + startZ + absZ) >> 4;
-
-                for (int cx = minChunkX; cx <= maxChunkX; cx++) {
-                    for (int cz = minChunkZ; cz <= maxChunkZ; cz++) {
-                        level.getChunk(cx, cz, net.minecraft.world.level.chunk.status.ChunkStatus.FULL, true);
-                    }
-                }
-
                 int totalVolume = absX * absY * absZ;
+
+                // Flags: UPDATE_CLIENTS (2) | UPDATE_SUPPRESS_DROPS (32) | UPDATE_KNOWN_SHAPE (64)
+                // Avoids UPDATE_NEIGHBORS (1) to prevent cascading chunk physics and server freezes
+                int placeFlags = Block.UPDATE_CLIENTS | Block.UPDATE_SUPPRESS_DROPS | Block.UPDATE_KNOWN_SHAPE;
 
                 for (int index = 0; index < totalVolume; index++) {
                     int paletteIndex = 0;
@@ -126,20 +118,30 @@ public class LitematicParser {
                         }
                     }
 
-                    if (paletteIndex >= 0 && paletteIndex < palette.size()) {
-                        BlockState stateToPlace = palette.get(paletteIndex);
-                        if (!stateToPlace.isAir()) {
-                            // Coordinate calculation in region
-                            int ry = index / (absX * absZ);
-                            int rem = index % (absX * absZ);
-                            int rz = rem / absX;
-                            int rx = rem % absX;
+                    // Fast skip: index 0 is almost always air, skip coordinate math
+                    if (paletteIndex <= 0 || paletteIndex >= palette.size()) {
+                        continue;
+                    }
 
-                            BlockPos worldPos = effectiveOrigin.offset(startX + rx, startY + ry, startZ + rz);
-                            if (worldPos.getY() >= minBuildHeight && worldPos.getY() < maxBuildHeight) {
-                                level.setBlock(worldPos, stateToPlace, Block.UPDATE_CLIENTS | Block.UPDATE_KNOWN_SHAPE);
-                                placedCount++;
-                            }
+                    BlockState stateToPlace = palette.get(paletteIndex);
+                    if (stateToPlace.isAir()) {
+                        continue;
+                    }
+
+                    // Coordinate calculation in region
+                    int ry = index / (absX * absZ);
+                    int rem = index % (absX * absZ);
+                    int rz = rem / absX;
+                    int rx = rem % absX;
+
+                    BlockPos worldPos = effectiveOrigin.offset(startX + rx, startY + ry, startZ + rz);
+                    if (worldPos.getY() >= minBuildHeight && worldPos.getY() < maxBuildHeight) {
+                        // Safe check: Only place if chunk is loaded to prevent recursive chunk generation
+                        int chunkX = worldPos.getX() >> 4;
+                        int chunkZ = worldPos.getZ() >> 4;
+                        if (level.hasChunk(chunkX, chunkZ)) {
+                            level.setBlock(worldPos, stateToPlace, placeFlags);
+                            placedCount++;
                         }
                     }
                 }
@@ -153,12 +155,16 @@ public class LitematicParser {
                         int tey = teTag.getInt("y");
                         int tez = teTag.getInt("z");
                         BlockPos teWorldPos = effectiveOrigin.offset(startX + tex, startY + tey, startZ + tez);
-                        net.minecraft.world.level.block.entity.BlockEntity be = level.getBlockEntity(teWorldPos);
-                        if (be != null) {
-                            teTag.putInt("x", teWorldPos.getX());
-                            teTag.putInt("y", teWorldPos.getY());
-                            teTag.putInt("z", teWorldPos.getZ());
-                            be.loadWithComponents(teTag, level.registryAccess());
+                        int chunkX = teWorldPos.getX() >> 4;
+                        int chunkZ = teWorldPos.getZ() >> 4;
+                        if (level.hasChunk(chunkX, chunkZ)) {
+                            net.minecraft.world.level.block.entity.BlockEntity be = level.getBlockEntity(teWorldPos);
+                            if (be != null) {
+                                teTag.putInt("x", teWorldPos.getX());
+                                teTag.putInt("y", teWorldPos.getY());
+                                teTag.putInt("z", teWorldPos.getZ());
+                                be.loadWithComponents(teTag, level.registryAccess());
+                            }
                         }
                     }
                 }
