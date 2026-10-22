@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/crop",
+  "textures": {
+    "crop": "tutien:block/crop_thanh_tam_hoa_stage2"
+  }
+}

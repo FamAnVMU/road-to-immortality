@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/crop",
+  "textures": {
+    "crop": "tutien:block/crop_cuu_diep_thao_stage1"
+  }
+}

@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:block/cube_all",
   "textures": {
-    "all": "minecraft:block/dirt"
+    "all": "tutien:block/dat_linh_duoc_trung_cap"
   }
 }
